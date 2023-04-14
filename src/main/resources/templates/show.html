@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Рейс</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css"/>
+    </head>
+    <body>
+        <h3 th:text="${'Рейс №' + route.id}"></h3>
+        <div>
+            <p th:text="${'Заказчик: ' + route.customer.name}"></p>
+            <p th:text="${'Дата погрузки: ' + #temporals.format(route.shipmentDate, 'dd/MM/yyyy')}"></p>
+            <p th:text="${'Загрузка: ' + route.departureCity}"></p>
+            <p th:text="${'Разгрузка: ' + route.destinationCity}"></p>
+            <p th:text="${'Номер счета/акта: ' + route.billNumber}"></p>
+            <p th:text="${'Водитель: ' + route.driver.name}"></p>
+            <p th:text="${'Стоимость рейса: ' + route.price}"></p>
+            <p th:if="${route.paid}" class="positive">Рейс оплачен</p>
+            <p th:unless="${route.paid}" class="negative">Рейс не оплачен</p>
+        </div>
+    </body>
+</html>

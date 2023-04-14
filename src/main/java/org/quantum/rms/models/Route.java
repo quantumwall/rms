@@ -8,12 +8,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString(exclude = "documents")
 @Entity
 @Table(name = "route")
 public class Route {
@@ -42,6 +44,10 @@ public class Route {
     
     @Column(name = "is_paid")
     private boolean paid;
+    
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    private Customer customer;
     
     @OneToOne
     @JoinColumn(name = "cargo_id", referencedColumnName = "id")

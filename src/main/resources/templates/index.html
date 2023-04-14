@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Все рейсы</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body>
+        <h3>Рейсы</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Дата загрузки</th>
+                    <th>Откуда</th>
+                    <th>Куда</th>
+                    <th>Груз</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="route : ${routes}">
+                    <td th:text="${#temporals.format(route.shipmentDate, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${route.departureCity}"></td>
+                    <td th:text="${route.destinationCity}"></td>
+                    <td th:text="${route.cargo.goods}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

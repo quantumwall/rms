@@ -5,9 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,17 +16,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "manager")
-public class Manager {
+@Table(name = "customer")
+public class Customer {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
     
     @Column(name = "name")
     private String name;
     
-    @OneToMany(mappedBy = "manager")
-    private List<Route> routes;
 }
