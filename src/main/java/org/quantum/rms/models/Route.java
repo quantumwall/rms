@@ -1,0 +1,60 @@
+package org.quantum.rms.models;
+
+import jakarta.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Entity
+@Table(name = "route")
+public class Route {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    
+    @Column(name = "shipment_date")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate shipmentDate;
+    
+    @Column(name = "departure_city")
+    private String departureCity;
+    
+    @Column(name = "destination_city")
+    private String destinationCity;
+    
+    @Column(name = "bill_number")
+    private int billNumber;
+    
+    @Column(name = "price")
+    private BigDecimal price;
+    
+    @Column(name = "is_paid")
+    private boolean paid;
+    
+    @OneToOne
+    @JoinColumn(name = "cargo_id", referencedColumnName = "id")
+    private Cargo cargo;
+    
+    @ManyToOne
+    @JoinColumn(name = "manager_id", referencedColumnName = "id")
+    private Manager manager;
+    
+    @OneToOne
+    @JoinColumn(name = "driver_id", referencedColumnName = "id")
+    private Driver driver;
+    
+    @OneToMany(mappedBy = "route")
+    private List<Document> documents;
+}
