@@ -5,9 +5,11 @@
         <title>Все рейсы</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" th:href="@{/css/main.css}"/>
     </head>
     <body>
         <h3>Рейсы</h3>
+        <button><a th:href="@{/routes/add}">Добавить рейс</a></button>
         <table>
             <thead>
                 <tr>
@@ -15,14 +17,16 @@
                     <th>Откуда</th>
                     <th>Куда</th>
                     <th>Груз</th>
+                    <th>Действия</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="route : ${routes}">
+                <tr th:each="route : ${routes}" th:class="${route.paid} ? positive : negative">
                     <td th:text="${#temporals.format(route.shipmentDate, 'dd/MM/yyyy')}"></td>
                     <td th:text="${route.departureCity}"></td>
                     <td th:text="${route.destinationCity}"></td>
                     <td th:text="${route.cargo.goods}"></td>
+                    <td><a th:href="@{/routes/{id}(id=${route.id})}">Подробнее</a></td>
                 </tr>
             </tbody>
         </table>

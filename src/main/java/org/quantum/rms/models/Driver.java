@@ -5,17 +5,20 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString(exclude = "routes")
 @Entity
 @Table(name = "driver")
 public class Driver {
@@ -28,6 +31,6 @@ public class Driver {
     @Column(name = "name")
     private String name;
     
-    @OneToOne(mappedBy = "driver")
-    private Route route;
+    @OneToMany(mappedBy = "driver")
+    private List<Route> routes;
 }

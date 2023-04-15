@@ -5,8 +5,10 @@ import java.util.logging.Logger;
 import org.quantum.rms.models.Route;
 import org.quantum.rms.repositories.RouteRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 public class RouteService {
 
     private final RouteRepository routeRepository;
@@ -26,5 +28,10 @@ public class RouteService {
     
     public Route findById(long id) {
         return routeRepository.findById(id).orElse(null);
+    }
+    
+    @Transactional
+    public void save(Route route) {
+        routeRepository.save(route);
     }
 }

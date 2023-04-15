@@ -37,7 +37,7 @@ public class Route {
     private String destinationCity;
     
     @Column(name = "bill_number")
-    private int billNumber;
+    private Integer billNumber;
     
     @Column(name = "price")
     private BigDecimal price;
@@ -49,7 +49,7 @@ public class Route {
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "cargo_id", referencedColumnName = "id")
     private Cargo cargo;
     
@@ -57,7 +57,7 @@ public class Route {
     @JoinColumn(name = "manager_id", referencedColumnName = "id")
     private Manager manager;
     
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "driver_id", referencedColumnName = "id")
     private Driver driver;
     
