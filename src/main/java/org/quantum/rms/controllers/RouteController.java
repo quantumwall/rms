@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,24 +51,42 @@ public class RouteController {
         return "/routes/create";
     }
     
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable("id") long id, Model model) {
+        model.addAttribute("route", routeService.findById(id));
+        model.addAttribute("customers", customerService.findAll());
+        model.addAttribute("drivers", driverService.findAll());
+        return "/routes/edit";
+    }
+    
     @PostMapping
     public String create(@ModelAttribute("route") Route route,
                          @RequestParam("customer_id") long customerId,
                          @RequestParam("driver_id") long driverId,
                          @RequestParam("cargo_name") String cargoName,
                          @RequestParam("cargo_weight") int cargoWeight) {
+        log.info("create route");
         var customer = customerService.findById(customerId);
         var driver = driverService.findById(driverId);
         var cargo = new Cargo();
-        log.info(String.format("\n%s\n", customer));
-        log.info(String.format("\n%s\n", driver));
         cargo.setGoods(cargoName);
         cargo.setWeight(cargoWeight);
-        log.info(String.format("\n%s\n", cargo));
         route.setCustomer(customer);
         route.setDriver(driver);
         route.setCargo(cargo);
         routeService.save(route);
+        return "redirect:/routes";
+    }
+    
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("route") Route route,
+                         @RequestParam("customer_id") long customerId,
+                         @RequestParam("driver_id") long driverId,
+                         @RequestParam("cargo_name") String cargoName,
+                         @RequestParam("cargo_weight") int cargoWeight,
+                         @PathVariable("id") long id) {
+        log.info("update route");
+        routeService.update(id, route);
         return "redirect:/routes";
     }
 }

@@ -19,6 +19,11 @@
             <p th:text="${'Стоимость рейса: ' + route.price}"></p>
             <p th:if="${route.paid}" class="positive">Рейс оплачен</p>
             <p th:unless="${route.paid}" class="negative">Рейс не оплачен</p>
+            <hr/>
+            <button type="button"><a th:href="@{/routes/{id}/edit(id=${route.id})}">Редактировать</a></button>
+            <form th:action="@{/routes/{id}(id=${route.id})}" th:method="post">
+                <button type="submit">Удалить</button>
+            </form>
         </div>
     </body>
 </html>

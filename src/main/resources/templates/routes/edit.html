@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Создание рейса</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body>
+        <form th:action="@{/routes/{id}(id=${route.id})}" th:method="${route.id} ? patch : post" th:object="${route}">
+            <fieldset>
+                <legend>Груз</legend>
+                <label for="customer">Заказчик: </label>
+                <select name="customer_id" id="customer">
+                    <option th:each="customer : ${customers}" th:value="${customer.id}" th:text="${customer.name}" th:selected="${#strings.equals(customer.name, route.customer.name)}"/>
+                </select><br/>
+                <input type="text" name="cargo_name" th:value="*{cargo.goods}" placeholder="Груз" /><br/>
+                <input type="number" name="cargo_weight" th:value="*{cargo.weight}" placeholder="Вес" /> тонн<br/>
+                <input type="number" th:field="*{price}" th:value="*{price}" placeholder="Стоимость" /> руб.
+            </fieldset>
+            
+            <fieldset>
+                <legend>Информация о маршруте</legend>
+                <label for="shipment_date">Дата загрузки</label>
+                <input type="date" th:field="*{shipmentDate}" th:value="*{shipmentDate}" placeholder="Дата загрузки" id="shipment_date"/><br/>
+                <input type="text" th:field="*{departureCity}" th:value="*{departureCity}" placeholder="Загрузка (город)" /><br/>
+                <input type="text" th:field="*{destinationCity}" th:value="*{destinationCity}" placeholder="Разгрузка (город)" /><br/>
+                <label for="driver">Водитель: </label>
+                <select name="driver_id" id="driver">
+                    <option th:each="driver : ${drivers}" th:value="${driver.id}" th:text="${driver.name}" th:selected="${#strings.equals(driver.name, route.driver.name)}"/>
+                </select>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Прочая информация</legend>
+                <input type="number" th:field="*{billNumber}" th:value="*{billNumber}" placeholder="Номера счета/акта" /><br />
+                <label for="paid">Рейс оплачен </label>
+                <input type="checkbox" th:field="*{paid}" th:checked="*{paid}" />
+            </fieldset>
+
+            <button type="submit">Отправить</button>
+        </form>
+    </body>
+</html>

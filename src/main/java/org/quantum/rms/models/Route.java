@@ -23,7 +23,7 @@ public class Route {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     
     @Column(name = "shipment_date")
     @Temporal(TemporalType.DATE)

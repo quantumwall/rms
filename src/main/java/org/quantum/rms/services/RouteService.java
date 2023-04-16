@@ -34,4 +34,22 @@ public class RouteService {
     public void save(Route route) {
         routeRepository.save(route);
     }
+    
+   @Transactional
+   public void update(long id, Route route) {
+       var routeToUpdate = routeRepository.findById(id);
+       if (routeToUpdate.isPresent()) {
+           var updRoute = routeToUpdate.get();
+           updRoute.setBillNumber(route.getBillNumber());
+           updRoute.setCargo(route.getCargo());
+           updRoute.setCustomer(route.getCustomer());
+           updRoute.setDepartureCity(route.getDepartureCity());
+           updRoute.setDestinationCity(route.getDestinationCity());
+           updRoute.setDriver(route.getDriver());
+           updRoute.setManager(route.getManager());
+           updRoute.setPaid(route.isPaid());
+           updRoute.setPrice(route.getPrice());
+           updRoute.setShipmentDate(route.getShipmentDate());
+       }
+   }
 }
