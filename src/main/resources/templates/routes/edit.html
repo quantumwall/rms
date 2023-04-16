@@ -11,11 +11,12 @@
             <fieldset>
                 <legend>Груз</legend>
                 <label for="customer">Заказчик: </label>
-                <select name="customer_id" id="customer">
+                <select th:field="*{customer.id}" id="customer">
                     <option th:each="customer : ${customers}" th:value="${customer.id}" th:text="${customer.name}" th:selected="${#strings.equals(customer.name, route.customer.name)}"/>
                 </select><br/>
-                <input type="text" name="cargo_name" th:value="*{cargo.goods}" placeholder="Груз" /><br/>
-                <input type="number" name="cargo_weight" th:value="*{cargo.weight}" placeholder="Вес" /> тонн<br/>
+                <input type="text" th:field="*{cargo.goods}" th:value="*{cargo.goods}" placeholder="Груз" /><br/>
+                <input type="number" th:field="*{cargo.weight}" th:value="*{cargo.weight}" placeholder="Вес" /> тонн<br/>
+                <input type="hidden" th:field="*{cargo.id}" th:value="*{cargo.id}"/>
                 <input type="number" th:field="*{price}" th:value="*{price}" placeholder="Стоимость" /> руб.
             </fieldset>
             
@@ -26,7 +27,7 @@
                 <input type="text" th:field="*{departureCity}" th:value="*{departureCity}" placeholder="Загрузка (город)" /><br/>
                 <input type="text" th:field="*{destinationCity}" th:value="*{destinationCity}" placeholder="Разгрузка (город)" /><br/>
                 <label for="driver">Водитель: </label>
-                <select name="driver_id" id="driver">
+                <select th:field="*{driver.id}" id="driver">
                     <option th:each="driver : ${drivers}" th:value="${driver.id}" th:text="${driver.name}" th:selected="${#strings.equals(driver.name, route.driver.name)}"/>
                 </select>
             </fieldset>

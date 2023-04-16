@@ -19,30 +19,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/routes")
 public class RouteController {
-    
+
     private final RouteService routeService;
     private final DriverService driverService;
     private final CustomerService customerService;
-    private final Logger log = Logger.getLogger(getClass().getSimpleName());
-    
+
     public RouteController(RouteService routeService, DriverService driverService, CustomerService customerService) {
         this.routeService = routeService;
         this.driverService = driverService;
         this.customerService = customerService;
     }
-    
+
     @GetMapping
     public String index(Model model) {
         model.addAttribute("routes", routeService.findAll());
         return "/routes/index";
     }
-    
+
     @GetMapping("/{id}")
     public String show(@PathVariable(name = "id", required = true) long id, Model model) {
         model.addAttribute("route", routeService.findById(id));
         return "/routes/show";
     }
-    
+
+    // TODO create cargo, driver, customer, inject they in new route and pass route to model
+    // this is for implementation of new create method
+    // TODO is it possible to use edit page for create new route?
     @GetMapping("/add")
     public String add(Model model) {
         model.addAttribute("route", new Route());
@@ -50,7 +52,7 @@ public class RouteController {
         model.addAttribute("drivers", driverService.findAll());
         return "/routes/create";
     }
-    
+
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") long id, Model model) {
         model.addAttribute("route", routeService.findById(id));
@@ -58,14 +60,14 @@ public class RouteController {
         model.addAttribute("drivers", driverService.findAll());
         return "/routes/edit";
     }
-    
+
+    // TODO catch only route object from view
     @PostMapping
     public String create(@ModelAttribute("route") Route route,
                          @RequestParam("customer_id") long customerId,
                          @RequestParam("driver_id") long driverId,
                          @RequestParam("cargo_name") String cargoName,
                          @RequestParam("cargo_weight") int cargoWeight) {
-        log.info("create route");
         var customer = customerService.findById(customerId);
         var driver = driverService.findById(driverId);
         var cargo = new Cargo();
@@ -77,15 +79,9 @@ public class RouteController {
         routeService.save(route);
         return "redirect:/routes";
     }
-    
+
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("route") Route route,
-                         @RequestParam("customer_id") long customerId,
-                         @RequestParam("driver_id") long driverId,
-                         @RequestParam("cargo_name") String cargoName,
-                         @RequestParam("cargo_weight") int cargoWeight,
-                         @PathVariable("id") long id) {
-        log.info("update route");
+    public String update(@PathVariable("id") long id, @ModelAttribute("route") Route route) {
         routeService.update(id, route);
         return "redirect:/routes";
     }

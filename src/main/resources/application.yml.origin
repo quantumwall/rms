@@ -9,5 +9,12 @@ spring:
         hibernate:
             dialect:
             show_sql: true
+  sql:
+    init:
+      mode: 
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 user:
     datastorage:
