@@ -27,13 +27,13 @@ public class Cargo {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(name = "goods")
     private String goods;
-    
+
     @Column(name = "weight")
     private int weight;
-    
+
     @OneToOne
     @JoinColumn(name = "route_id", referencedColumnName = "id")
     private Route route;

@@ -13,11 +13,11 @@ public class DriverService {
     public DriverService(DriverRepository driverRepository) {
         this.driverRepository = driverRepository;
     }
-    
+
     public List<Driver> findAll() {
         return driverRepository.findAll();
     }
-    
+
     public Driver findById(long id) {
         return driverRepository.findById(id).orElse(null);
     }

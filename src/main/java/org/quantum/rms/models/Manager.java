@@ -25,10 +25,10 @@ public class Manager {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(name = "name")
     private String name;
-    
+
     @OneToMany(mappedBy = "manager")
     private List<Route> routes;
 }

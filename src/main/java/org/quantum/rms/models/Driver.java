@@ -27,10 +27,10 @@ public class Driver {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(name = "name")
     private String name;
-    
+
     @OneToMany(mappedBy = "driver")
     private List<Route> routes;
 }

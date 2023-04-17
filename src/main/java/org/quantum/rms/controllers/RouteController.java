@@ -1,6 +1,8 @@
 package org.quantum.rms.controllers;
 
 import org.quantum.rms.models.Cargo;
+import org.quantum.rms.models.Customer;
+import org.quantum.rms.models.Driver;
 import org.quantum.rms.models.Route;
 import org.quantum.rms.services.CustomerService;
 import org.quantum.rms.services.DriverService;
@@ -14,10 +16,9 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/routes")
+@RequestMapping(value = {"/", "/routes"})
 public class RouteController {
 
     private final RouteService routeService;
@@ -42,15 +43,16 @@ public class RouteController {
         return "/routes/show";
     }
 
-    // TODO create cargo, driver, customer, inject they in new route and pass route to model
-    // this is for implementation of new create method
-    // TODO is it possible to use edit page for create new route?
     @GetMapping("/add")
     public String add(Model model) {
-        model.addAttribute("route", new Route());
+        var route = new Route();
+        route.setCustomer(new Customer());
+        route.setDriver(new Driver());
+        route.setCargo(new Cargo());
+        model.addAttribute("route", route);
         model.addAttribute("customers", customerService.findAll());
         model.addAttribute("drivers", driverService.findAll());
-        return "/routes/create";
+        return "/routes/edit";
     }
 
     @GetMapping("/{id}/edit")
@@ -61,21 +63,8 @@ public class RouteController {
         return "/routes/edit";
     }
 
-    // TODO catch only route object from view
     @PostMapping
-    public String create(@ModelAttribute("route") Route route,
-                         @RequestParam("customer_id") long customerId,
-                         @RequestParam("driver_id") long driverId,
-                         @RequestParam("cargo_name") String cargoName,
-                         @RequestParam("cargo_weight") int cargoWeight) {
-        var customer = customerService.findById(customerId);
-        var driver = driverService.findById(driverId);
-        var cargo = new Cargo();
-        cargo.setGoods(cargoName);
-        cargo.setWeight(cargoWeight);
-        route.setCustomer(customer);
-        route.setDriver(driver);
-        route.setCargo(cargo);
+    public String create(@ModelAttribute("route") Route route) {
         routeService.save(route);
         return "redirect:/routes";
     }

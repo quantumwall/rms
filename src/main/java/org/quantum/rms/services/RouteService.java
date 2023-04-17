@@ -2,6 +2,7 @@ package org.quantum.rms.services;
 
 import java.util.List;
 import java.util.logging.Logger;
+import org.quantum.rms.models.Cargo;
 import org.quantum.rms.models.Route;
 import org.quantum.rms.repositories.RouteRepository;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,11 @@ public class RouteService {
     
     @Transactional
     public void save(Route route) {
+        var customer = customerService.findById(route.getCustomer().getId());
+        var driver = driverService.findById(route.getDriver().getId());
+        route.setCustomer(customer);
+        route.setDriver(driver);
+        route.getCargo().setRoute(route);
         routeRepository.save(route);
     }
     

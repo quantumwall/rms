@@ -13,11 +13,11 @@ public class CustomerService {
     public CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
-    
+
     public List<Customer> findAll() {
         return customerRepository.findAll();
     }
-    
+
     public Customer findById(long id) {
         return customerRepository.findById(id).orElse(null);
     }
