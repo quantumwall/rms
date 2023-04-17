@@ -1,6 +1,5 @@
 package org.quantum.rms.controllers;
 
-import java.util.logging.Logger;
 import org.quantum.rms.models.Cargo;
 import org.quantum.rms.models.Route;
 import org.quantum.rms.services.CustomerService;
@@ -8,6 +7,7 @@ import org.quantum.rms.services.DriverService;
 import org.quantum.rms.services.RouteService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -83,6 +83,12 @@ public class RouteController {
     @PatchMapping("/{id}")
     public String update(@PathVariable("id") long id, @ModelAttribute("route") Route route) {
         routeService.update(id, route);
+        return "redirect:/routes";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") long id) {
+        routeService.delete(id);
         return "redirect:/routes";
     }
 }

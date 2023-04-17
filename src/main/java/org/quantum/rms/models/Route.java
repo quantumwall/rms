@@ -49,8 +49,7 @@ public class Route {
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
     
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "cargo_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "route", cascade = CascadeType.PERSIST)
     private Cargo cargo;
     
     @ManyToOne
