@@ -1,5 +1,6 @@
 package org.quantum.rms.controllers;
 
+import jakarta.validation.Valid;
 import org.quantum.rms.models.Cargo;
 import org.quantum.rms.models.Customer;
 import org.quantum.rms.models.Driver;
@@ -9,6 +10,7 @@ import org.quantum.rms.services.DriverService;
 import org.quantum.rms.services.RouteService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -64,13 +66,28 @@ public class RouteController {
     }
 
     @PostMapping
-    public String create(@ModelAttribute("route") Route route) {
+    public String create(@ModelAttribute("route") @Valid Route route,
+                         BindingResult bindResult,
+                         Model model) {
+        if (bindResult.hasErrors()) {
+            model.addAttribute("customers", customerService.findAll());
+            model.addAttribute("drivers", driverService.findAll());
+            return "/routes/edit";
+        }
         routeService.save(route);
         return "redirect:/routes";
     }
 
     @PatchMapping("/{id}")
-    public String update(@PathVariable("id") long id, @ModelAttribute("route") Route route) {
+    public String update(@PathVariable("id") long id,
+                         @ModelAttribute("route") @Valid Route route,
+                         BindingResult bindResult,
+                         Model model) {
+        if (bindResult.hasErrors()) {
+            model.addAttribute("customers", customerService.findAll());
+            model.addAttribute("drivers", driverService.findAll());
+            return "/routes/edit";
+        }
         routeService.update(id, route);
         return "redirect:/routes";
     }

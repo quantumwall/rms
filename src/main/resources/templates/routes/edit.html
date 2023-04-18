@@ -5,6 +5,7 @@
         <title th:text="${route.id != null ? 'Редактирование рейса' : 'Создание рейса'}"></title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
     </head>
     <body>
         <form th:action="@{${route.id == null ? '/routes' : '/routes/' + route.id}}" th:method="${route.id} ? patch : post" th:object="${route}">
@@ -14,18 +15,30 @@
                 <select th:field="*{customer.id}" id="customer">
                     <option th:each="customer : ${customers}" th:value="${customer.id}" th:text="${customer.name}" th:selected="${#strings.equals(customer.name, route.customer.name)}"/>
                 </select><br/>
-                <input type="text" th:field="*{cargo.goods}" th:value="*{cargo.goods}" placeholder="Груз" /><br/>
+                <input type="text" th:field="*{cargo.product}" th:value="*{cargo.product}" placeholder="Груз" /><br/>
                 <input type="number" th:field="*{cargo.weight}" th:value="*{cargo.weight}" placeholder="Вес" /> тонн<br/>
                 <input type="hidden" th:field="*{cargo.id}" th:value="*{cargo.id}"/>
                 <input type="number" th:field="*{price}" th:value="*{price}" placeholder="Стоимость" /> руб.
+                <div th:if="${#fields.hasErrors('price')}" class="negative">
+                    <span th:errors="*{price}"></span>
+                </div>
             </fieldset>
 
             <fieldset>
                 <legend>Информация о маршруте</legend>
                 <label for="shipment_date">Дата загрузки</label>
                 <input type="date" th:field="*{shipmentDate}" th:value="*{shipmentDate}" placeholder="Дата загрузки" id="shipment_date"/><br/>
+                <div th:if="${#fields.hasErrors('shipmentDate')}" class="negative">
+                    <span th:errors="*{shipmentDate}"/>
+                </div>
                 <input type="text" th:field="*{departureCity}" th:value="*{departureCity}" placeholder="Загрузка (город)" /><br/>
+                <div th:if="${#fields.hasErrors('departureCity')}" class="negative">
+                    <span th:errors="*{departureCity}"/>
+                </div>
                 <input type="text" th:field="*{destinationCity}" th:value="*{destinationCity}" placeholder="Разгрузка (город)" /><br/>
+                <div th:if="${#fields.hasErrors('destinationCity')}" class="negative">
+                    <span th:errors="*{destinationCity}"/>
+                </div>
                 <label for="driver">Водитель: </label>
                 <select th:field="*{driver.id}" id="driver">
                     <option th:each="driver : ${drivers}" th:value="${driver.id}" th:text="${driver.name}" th:selected="${#strings.equals(driver.name, route.driver.name)}"/>
@@ -35,6 +48,9 @@
             <fieldset>
                 <legend>Прочая информация</legend>
                 <input type="number" th:field="*{billNumber}" th:value="*{billNumber}" placeholder="Номера счета/акта" /><br />
+                <div th:if="${#fields.hasErrors('billNumber')}" class="negative">
+                    <span th:errors="*{billNumber}"/>
+                </div>
                 <label for="paid">Рейс оплачен </label>
                 <input type="checkbox" th:field="*{paid}" th:checked="*{paid}" />
             </fieldset>

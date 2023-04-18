@@ -1,6 +1,11 @@
 package org.quantum.rms.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -28,18 +33,26 @@ public class Route {
     @Column(name = "shipment_date")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @PastOrPresent(message = "Указанная дата не может быть позднее сегодняшней")
     private LocalDate shipmentDate;
 
     @Column(name = "departure_city")
+    @NotBlank(message = "Не указан город загрузки")
+    @Size(min = 2, max = 100, message = "Название города должно быть в промежутке 2 - 100 символов")
     private String departureCity;
 
     @Column(name = "destination_city")
+    @NotBlank(message = "Не указан город разгрузки")
+    @Size(min = 2, max = 100, message = "Название города должно быть в промежутке 2 - 100 символов")
     private String destinationCity;
 
     @Column(name = "bill_number")
+    @Max(value = Integer.MAX_VALUE, message = "Номер счета/акта превышает максимально допустимое значение 2147483647")
+    @Positive(message = "Номер счета/акта должно быть положительным числом")
     private Integer billNumber;
 
     @Column(name = "price")
+    @Positive(message = "Стоимость рейса должна быть положительным числом")
     private BigDecimal price;
 
     @Column(name = "is_paid")

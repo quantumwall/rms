@@ -2,7 +2,6 @@ package org.quantum.rms.services;
 
 import java.util.List;
 import java.util.logging.Logger;
-import org.quantum.rms.models.Cargo;
 import org.quantum.rms.models.Route;
 import org.quantum.rms.repositories.RouteRepository;
 import org.springframework.stereotype.Service;
@@ -54,7 +53,7 @@ public class RouteService {
             var driver = driverService.findById(route.getDriver().getId());
             updRoute.setCustomer(customer);
             updRoute.setDriver(driver);
-            updRoute.getCargo().setGoods(route.getCargo().getGoods());
+            updRoute.getCargo().setProduct(route.getCargo().getProduct());
             updRoute.getCargo().setWeight(route.getCargo().getWeight());
             updRoute.setBillNumber(route.getBillNumber());
             updRoute.setDepartureCity(route.getDepartureCity());

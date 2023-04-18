@@ -25,7 +25,7 @@
                     <td th:text="${#temporals.format(route.shipmentDate, 'dd/MM/yyyy')}"></td>
                     <td th:text="${route.departureCity}"></td>
                     <td th:text="${route.destinationCity}"></td>
-                    <td th:text="${route.cargo.goods}"></td>
+                    <td th:text="${route.cargo.product}"></td>
                     <td><a th:href="@{/routes/{id}(id=${route.id})}">Подробнее</a></td>
                 </tr>
             </tbody>
