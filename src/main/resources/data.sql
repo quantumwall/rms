@@ -3,6 +3,7 @@ DELETE FROM route;
 DELETE FROM driver;
 DELETE FROM manager;
 DELETE FROM cargo;
+DELETE FROM customer;
 
 INSERT INTO manager (name)
 VALUES  ('Петров Петр Петрович'),
