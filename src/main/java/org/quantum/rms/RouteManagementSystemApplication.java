@@ -10,4 +10,11 @@ public class RouteManagementSystemApplication {
         SpringApplication.run(RouteManagementSystemApplication.class, args);
     }
 
+//    @Bean
+//    ApplicationRunner loadData() {
+//    	return args -> {
+//    		
+//    		
+//    	};
+//    }
 }
