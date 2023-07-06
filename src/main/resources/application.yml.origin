@@ -1,20 +1,16 @@
 spring:
   datasource:
-    driver-class-name:
-    url:
-    username:
+    driver-class-name: 
+    url: 
+    username: 
     password:
   jpa:
-    properties: 
-        hibernate:
-            dialect:
-            show_sql: true
-  sql:
-    init:
-      mode: 
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
   mvc:
     hiddenmethod:
       filter:
         enabled: true
 user:
-    datastorage:
+    datastorage: 
