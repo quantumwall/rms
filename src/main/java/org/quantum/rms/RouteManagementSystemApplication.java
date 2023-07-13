@@ -57,13 +57,13 @@ public class RouteManagementSystemApplication {
 	    var cargo3 = new Cargo();
 	    var cargo4 = new Cargo();
 	    cargo1.setName("Мясо");
-	    cargo1.setWeight(10000);
+	    cargo1.setWeight(10000.);
 	    cargo2.setName("Палеты");
-	    cargo2.setWeight(5000);
+	    cargo2.setWeight(5000.);
 	    cargo3.setName("Котлеты");
-	    cargo3.setWeight(8000);
+	    cargo3.setWeight(8000.);
 	    cargo4.setName("Пиво");
-	    cargo4.setWeight(15000);
+	    cargo4.setWeight(15000.);
 
 	    var route1 = new Route();
 	    var route2 = new Route();

@@ -22,5 +22,5 @@ public class Cargo {
 
 	private String name;
 
-	private int weight;
+	private Double weight;
 }

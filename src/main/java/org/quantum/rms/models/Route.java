@@ -75,6 +75,13 @@ public class Route {
     @ManyToOne
     private User user;
 
+    @Override
+    public String toString() {
+	return "Route [id=" + id + ", shipmentDate=" + shipmentDate + ", departureCity=" + departureCity
+		+ ", destinationCity=" + destinationCity + ", billNumber=" + billNumber + ", price=" + price + ", paid="
+		+ paid + "]";
+    }
+
 //    @OneToMany(mappedBy = "route", fetch = FetchType.EAGER)
 //    private List<Document> documents;
 }

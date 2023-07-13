@@ -1,6 +1,7 @@
 package org.quantum.rms.services;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.quantum.rms.models.Route;
 import org.quantum.rms.repositories.RouteRepository;
@@ -21,13 +22,13 @@ public class RouteService {
         this.driverService = driverService;
     }
     
-    public List<Route> findAll() {
-        return routeRepository.findAll();
+    public List<Route> findAll(String filter) {
+	if (Objects.isNull(filter) || filter.isBlank()) {
+	    return routeRepository.findAll();
+	}
+        return routeRepository.search(filter);
     }
     
-    public Route findByBillNumber(int billNumber) {
-        return routeRepository.findByBillNumber(billNumber).orElse(null);
-    }
     
     public Route findById(long id) {
         return routeRepository.findById(id).orElse(null);
