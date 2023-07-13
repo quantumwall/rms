@@ -20,7 +20,7 @@ public class Cargo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String goods;
+	private String name;
 
 	private int weight;
 }

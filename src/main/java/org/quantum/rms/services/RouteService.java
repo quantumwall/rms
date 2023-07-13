@@ -35,10 +35,10 @@ public class RouteService {
     
     @Transactional
     public void save(Route route) {
-        var customer = customerService.findById(route.getCustomer().getId());
-        var driver = driverService.findById(route.getDriver().getId());
-        route.setCustomer(customer);
-        route.setDriver(driver);
+//        var customer = customerService.findById(route.getCustomer().getId());
+//        var driver = driverService.findById(route.getDriver().getId());
+//        route.setCustomer(customer);
+//        route.setDriver(driver);
         routeRepository.save(route);
     }
     
@@ -51,7 +51,7 @@ public class RouteService {
             var driver = driverService.findById(route.getDriver().getId());
             updRoute.setCustomer(customer);
             updRoute.setDriver(driver);
-            updRoute.getCargo().setGoods(route.getCargo().getGoods());
+            updRoute.getCargo().setName(route.getCargo().getName());
             updRoute.getCargo().setWeight(route.getCargo().getWeight());
             updRoute.setBillNumber(route.getBillNumber());
             updRoute.setDepartureCity(route.getDepartureCity());
