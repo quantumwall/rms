@@ -17,15 +17,15 @@ public class CargoService {
     public CargoService(CargoRepository cargoRepository) {
 	this.cargoRepository = cargoRepository;
     }
-    
+
     public List<Cargo> findAll() {
 	return cargoRepository.findAll();
     }
-    
+
     public Cargo findById(Long id) {
 	return cargoRepository.findById(id).orElse(null);
     }
-    
+
     @Transactional
     public Cargo save(Cargo cargo) {
 	if (Objects.nonNull(cargo)) {
@@ -33,7 +33,7 @@ public class CargoService {
 	}
 	return cargo;
     }
-    
+
     @Transactional
     public Cargo delete(Cargo cargo) {
 	if (Objects.nonNull(cargo)) {
@@ -41,5 +41,5 @@ public class CargoService {
 	}
 	return cargo;
     }
-    
+
 }

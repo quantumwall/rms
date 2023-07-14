@@ -22,14 +22,14 @@ import lombok.Setter;
 @Table(name = "users")
 public class User {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	private String name;
-	
-	@OneToMany
-	@JoinColumn(name = "user_id")
-	private List<Route> routes;
+    private String name;
+
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private List<Route> routes;
 
 }

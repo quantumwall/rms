@@ -16,9 +16,9 @@ import lombok.Setter;
 @Entity
 public class Driver {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	private String name;
+    private String name;
 }

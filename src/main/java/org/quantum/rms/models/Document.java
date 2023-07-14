@@ -19,13 +19,13 @@ public class Document {
 //    @Id
 //    @Column(name = "id")
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    private Long id;
 
-	private String name;
+    private String name;
 
-	private String path;
+    private String path;
 
-	private String type;
+    private String type;
 
 //    @ManyToOne
 //    @JoinColumn(name = "route_id", referencedColumnName = "id")

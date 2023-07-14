@@ -14,6 +14,7 @@ import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.BigDecimalField;
 import com.vaadin.flow.component.textfield.IntegerField;
@@ -42,29 +43,27 @@ public class RouteForm extends FormLayout {
     private Button closeButton = new Button("Отменить");
 
     public RouteForm(List<Customer> customers, List<Driver> drivers) {
+	binder.bindInstanceFields(this);
 	customer.setItems(customers);
 	customer.setItemLabelGenerator(Customer::getName);
 	driver.setItems(drivers);
 	driver.setItemLabelGenerator(Driver::getName);
-	binder.bindInstanceFields(this);
-	
-	//TODO: creating new route throw exception because cargo is null
 	binder.forField(cargoName).bind("cargo.name");
 	binder.forField(cargoWeight).bind("cargo.weight");
-	add(shipmentDate, departureCity, destinationCity, billNumber, price, paid, cargoName, cargoWeight, customer, driver,
-		createButtonLayout());
+	add(shipmentDate, departureCity, destinationCity, billNumber, price, paid, cargoName, cargoWeight, customer,
+		driver, createButtonLayout());
     }
 
     private HorizontalLayout createButtonLayout() {
 	saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 	saveButton.addClickListener(e -> validateAndSave());
-	
+
 	deleteButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
 	deleteButton.addClickListener(e -> fireEvent(new DeleteEvent(this, binder.getBean())));
-	
+
 	closeButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 	closeButton.addClickListener(e -> fireEvent(new CloseEvent(this)));
-	
+
 	var buttons = new HorizontalLayout(saveButton, deleteButton, closeButton);
 	return buttons;
     }
@@ -72,6 +71,8 @@ public class RouteForm extends FormLayout {
     private void validateAndSave() {
 	if (binder.validate().isOk()) {
 	    fireEvent(new SaveEvent(this, binder.getBean()));
+	} else {
+	    Notification.show("Допущены ошибки при заполнении полей формы");
 	}
     }
 

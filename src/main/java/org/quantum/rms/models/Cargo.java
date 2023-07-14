@@ -16,11 +16,11 @@ import lombok.Setter;
 @Entity
 public class Cargo {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	private String name;
+    private String name = "";
 
-	private Double weight;
+    private Double weight;
 }

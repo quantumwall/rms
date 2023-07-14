@@ -9,14 +9,13 @@ import org.quantum.rms.services.RouteService;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 
-@com.vaadin.flow.router.Route("routes")
+@com.vaadin.flow.router.Route(value = "routes", layout = MainLayout.class)
 public class RoutesView extends VerticalLayout {
 
     private static final long serialVersionUID = 1L;
@@ -45,9 +44,13 @@ public class RoutesView extends VerticalLayout {
 	searchField.setValueChangeMode(ValueChangeMode.LAZY);
 	searchField.setPlaceholder("Поиск...");
 	var addRouteButton = new Button("Добавить маршрут");
-	addRouteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-	addRouteButton.addClickListener(e -> editRoute(new Route()));
+	addRouteButton.addClickListener(e -> addRoute());
 	return new HorizontalLayout(searchField, addRouteButton);
+    }
+
+    private void addRoute() {
+	grid.asSingleSelect().clear();
+	editRoute(new Route());
     }
 
     private HorizontalLayout getContent() {
@@ -65,28 +68,31 @@ public class RoutesView extends VerticalLayout {
 	grid.addColumn(Route::getDestinationCity).setHeader("Город разгрузки");
 	grid.addColumn(Route::getShipmentDate).setHeader("Дата погрузки");
 	grid.addColumn(r -> r.getCustomer().getName()).setHeader("Заказчик").setSortable(true);
+	grid.getColumns().forEach(c -> c.setAutoWidth(true));
 	grid.asSingleSelect().addValueChangeListener(e -> editRoute(e.getValue()));
     }
 
     private Component configureForm() {
 	form = new RouteForm(customerService.findAll(), driverService.findAll());
 	form.setWidth("30em");
+	form.addSaveListener(e -> saveRoute(e.getRoute()));
 	form.addDeleteListener(e -> deleteRoute(e.getRoute()));
+	form.addCloseListener(e -> closeEditor());
 	return form;
     }
 
-    private void updateList() {
-	grid.setItems(routeService.findAll(searchField.getValue()));
-    }
-
-    private void closeEditor() {
-	form.setRoute(null);
-	form.setVisible(false);
+    private void saveRoute(Route route) {
+	if (Objects.isNull(route)) {
+	    closeEditor();
+	} else {
+	    routeService.save(route);
+	    closeEditor();
+	    updateList();
+	}
     }
 
     private void editRoute(Route route) {
 	if (Objects.isNull(route)) {
-	    form.setRoute(null);
 	    closeEditor();
 	} else {
 	    form.setRoute(route);
@@ -101,4 +107,14 @@ public class RoutesView extends VerticalLayout {
 	    updateList();
 	}
     }
+
+    private void updateList() {
+	grid.setItems(routeService.findAll(searchField.getValue()));
+    }
+
+    private void closeEditor() {
+	form.setRoute(null);
+	form.setVisible(false);
+    }
+
 }

@@ -8,7 +8,6 @@ import org.quantum.rms.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Service
 @Transactional(readOnly = true)
 public class UserService {
@@ -18,15 +17,15 @@ public class UserService {
     public UserService(UserRepository userRepository) {
 	this.userRepository = userRepository;
     }
-    
+
     public List<User> findAll() {
 	return userRepository.findAll();
     }
-    
+
     public User findById(Long id) {
 	return userRepository.findById(id).orElse(null);
     }
-    
+
     @Transactional
     public User save(User user) {
 	if (Objects.nonNull(user)) {
@@ -34,7 +33,7 @@ public class UserService {
 	}
 	return user;
     }
-    
+
     @Transactional
     public User delete(User user) {
 	if (Objects.nonNull(user)) {
@@ -42,5 +41,5 @@ public class UserService {
 	}
 	return user;
     }
-    
+
 }

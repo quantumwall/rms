@@ -64,10 +64,10 @@ public class Route {
     private boolean paid;
 
     @ManyToOne
-    private Customer customer;
+    private Customer customer = new Customer();
 
     @OneToOne(cascade = CascadeType.ALL)
-    private Cargo cargo;
+    private Cargo cargo = new Cargo();
 
     @ManyToOne
     private Driver driver;

@@ -15,17 +15,17 @@ public class DriverService {
     private final DriverRepository driverRepository;
 
     public DriverService(DriverRepository driverRepository) {
-        this.driverRepository = driverRepository;
+	this.driverRepository = driverRepository;
     }
 
     public List<Driver> findAll() {
-        return driverRepository.findAll();
+	return driverRepository.findAll();
     }
 
     public Driver findById(long id) {
-        return driverRepository.findById(id).orElse(null);
+	return driverRepository.findById(id).orElse(null);
     }
-    
+
     @Transactional
     public Driver save(Driver driver) {
 	if (Objects.nonNull(driver)) {
@@ -33,7 +33,7 @@ public class DriverService {
 	}
 	return driver;
     }
-    
+
     @Transactional
     public Driver delete(Driver driver) {
 	if (Objects.nonNull(driver)) {
