@@ -106,7 +106,7 @@ public class RouteManagementSystemApplication {
 	    route3.setPaid(true);
 	    route3.setPrice(BigDecimal.valueOf(23000));
 	    route3.setShipmentDate(LocalDate.of(2023, 4, 10));
-	    route3.setUser(user1);
+	    route3.setUser(user2);
 
 	    route4.setBillNumber(8765);
 	    route4.setCargo(cargo4);
@@ -117,7 +117,7 @@ public class RouteManagementSystemApplication {
 	    route4.setPaid(false);
 	    route4.setPrice(BigDecimal.valueOf(2000));
 	    route4.setShipmentDate(LocalDate.of(2023, 3, 30));
-	    route4.setUser(user1);
+	    route4.setUser(user2);
 
 	    routeService.save(route1);
 	    routeService.save(route2);

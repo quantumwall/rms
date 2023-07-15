@@ -15,18 +15,21 @@ public class RouteService {
     private final RouteRepository routeRepository;
     private final CustomerService customerService;
     private final DriverService driverService;
+    private final SecurityService securityService;
 
-    public RouteService(RouteRepository routeRepository, CustomerService customerService, DriverService driverService) {
+    public RouteService(RouteRepository routeRepository, CustomerService customerService, DriverService driverService, SecurityService securityService) {
 	this.routeRepository = routeRepository;
 	this.customerService = customerService;
 	this.driverService = driverService;
+	this.securityService = securityService;
     }
 
     public List<Route> findAll(String filter) {
+	Long userId = securityService.getAuthenticatedUser().map(u -> u.getId()).orElse(null);
 	if (Objects.isNull(filter) || filter.isBlank()) {
-	    return routeRepository.findAll();
+	    return routeRepository.findByUser_Id(userId);
 	}
-	return routeRepository.search(filter);
+	return routeRepository.search(filter, userId);
     }
 
     public Route findById(long id) {

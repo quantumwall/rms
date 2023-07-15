@@ -17,6 +17,10 @@ public class SecurityUser implements UserDetails {
 	Objects.requireNonNull(user);
 	this.user = user;
     }
+    
+    public Long getId() {
+	return user.getId();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
