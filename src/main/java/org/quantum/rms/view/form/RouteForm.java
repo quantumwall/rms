@@ -1,4 +1,4 @@
-package org.quantum.rms.view;
+package org.quantum.rms.view.form;
 
 import java.util.List;
 import java.util.Objects;

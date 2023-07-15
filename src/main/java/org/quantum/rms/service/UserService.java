@@ -2,6 +2,7 @@ package org.quantum.rms.service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.quantum.rms.model.User;
 import org.quantum.rms.repository.UserRepository;
@@ -22,8 +23,12 @@ public class UserService {
 	return userRepository.findAll();
     }
 
-    public User findById(Long id) {
-	return userRepository.findById(id).orElse(null);
+    public Optional<User>findById(Long id) {
+	return userRepository.findById(id);
+    }
+    
+    public Optional<User> findByEmail(String email) {
+	return userRepository.findByEmail(email);
     }
 
     @Transactional

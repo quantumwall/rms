@@ -2,6 +2,7 @@ package org.quantum.rms.model;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,6 +36,7 @@ public class User {
     
     @NotEmpty
     @Email
+    @Column(unique = true)
     private String email;
     
     @NotNull
