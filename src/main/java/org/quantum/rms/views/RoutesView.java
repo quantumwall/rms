@@ -15,7 +15,10 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 
-@com.vaadin.flow.router.Route(value = "routes", layout = MainLayout.class)
+import jakarta.annotation.security.PermitAll;
+
+@com.vaadin.flow.router.Route(value = "", layout = MainLayout.class)
+@PermitAll
 public class RoutesView extends VerticalLayout {
 
     private static final long serialVersionUID = 1L;
@@ -43,6 +46,7 @@ public class RoutesView extends VerticalLayout {
 	searchField.addValueChangeListener(e -> updateList());
 	searchField.setValueChangeMode(ValueChangeMode.LAZY);
 	searchField.setPlaceholder("Поиск...");
+	searchField.setClearButtonVisible(true);
 	var addRouteButton = new Button("Добавить маршрут");
 	addRouteButton.addClickListener(e -> addRoute());
 	return new HorizontalLayout(searchField, addRouteButton);

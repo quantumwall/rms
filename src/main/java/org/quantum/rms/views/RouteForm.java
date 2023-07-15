@@ -1,6 +1,7 @@
 package org.quantum.rms.views;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.quantum.rms.models.Customer;
 import org.quantum.rms.models.Driver;
@@ -60,6 +61,7 @@ public class RouteForm extends FormLayout {
 
 	deleteButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
 	deleteButton.addClickListener(e -> fireEvent(new DeleteEvent(this, binder.getBean())));
+	deleteButton.setEnabled(false);
 
 	closeButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 	closeButton.addClickListener(e -> fireEvent(new CloseEvent(this)));
@@ -77,6 +79,7 @@ public class RouteForm extends FormLayout {
     }
 
     public void setRoute(Route route) {
+	deleteButton.setEnabled(Objects.nonNull(route) && Objects.nonNull(route.getId()));
 	binder.setBean(route);
     }
 

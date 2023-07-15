@@ -16,6 +16,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class RouteManagementSystemApplication {
@@ -26,12 +27,16 @@ public class RouteManagementSystemApplication {
 
     @Bean
     ApplicationRunner loadData(UserService userService, CustomerService customerService, DriverService driverService,
-	    RouteService routeService) {
+	    RouteService routeService, PasswordEncoder encoder) {
 	return args -> {
 	    var user1 = new User();
 	    var user2 = new User();
 	    user1.setName("Петров Петр Петрович");
+	    user1.setEmail("user1@user1.com");
+	    user1.setPassword(encoder.encode("password"));
 	    user2.setName("Иванов Иван Иванович");
+	    user2.setEmail("user2@user2.com");
+	    user2.setPassword(encoder.encode("password"));
 	    userService.save(user1);
 	    userService.save(user2);
 
