@@ -1,11 +1,11 @@
-package org.quantum.rms.views;
+package org.quantum.rms.view;
 
 import java.util.List;
 import java.util.Objects;
 
-import org.quantum.rms.models.Customer;
-import org.quantum.rms.models.Driver;
-import org.quantum.rms.models.Route;
+import org.quantum.rms.model.Customer;
+import org.quantum.rms.model.Driver;
+import org.quantum.rms.model.Route;
 
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;

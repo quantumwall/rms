@@ -1,11 +1,11 @@
-package org.quantum.rms.views;
+package org.quantum.rms.view;
 
 import java.util.Objects;
 
-import org.quantum.rms.models.Route;
-import org.quantum.rms.services.CustomerService;
-import org.quantum.rms.services.DriverService;
-import org.quantum.rms.services.RouteService;
+import org.quantum.rms.model.Route;
+import org.quantum.rms.service.CustomerService;
+import org.quantum.rms.service.DriverService;
+import org.quantum.rms.service.RouteService;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;

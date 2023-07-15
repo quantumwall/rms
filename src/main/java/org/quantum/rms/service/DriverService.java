@@ -1,10 +1,10 @@
-package org.quantum.rms.services;
+package org.quantum.rms.service;
 
 import java.util.List;
 import java.util.Objects;
 
-import org.quantum.rms.models.Driver;
-import org.quantum.rms.repositories.DriverRepository;
+import org.quantum.rms.model.Driver;
+import org.quantum.rms.repository.DriverRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,7 +1,7 @@
 package org.quantum.rms.config;
 
-import org.quantum.rms.services.JpaUserDetailsService;
-import org.quantum.rms.views.LoginView;
+import org.quantum.rms.service.JpaUserDetailsService;
+import org.quantum.rms.view.LoginView;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

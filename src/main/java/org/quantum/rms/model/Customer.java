@@ -1,4 +1,4 @@
-package org.quantum.rms.models;
+package org.quantum.rms.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

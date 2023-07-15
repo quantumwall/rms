@@ -1,8 +1,8 @@
-package org.quantum.rms.services;
+package org.quantum.rms.service;
 
 import java.util.Optional;
 
-import org.quantum.rms.models.SecurityUser;
+import org.quantum.rms.model.SecurityUser;
 import org.springframework.stereotype.Service;
 
 import com.vaadin.flow.spring.security.AuthenticationContext;

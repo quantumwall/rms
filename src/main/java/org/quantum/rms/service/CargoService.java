@@ -1,10 +1,10 @@
-package org.quantum.rms.services;
+package org.quantum.rms.service;
 
 import java.util.List;
 import java.util.Objects;
 
-import org.quantum.rms.models.Cargo;
-import org.quantum.rms.repositories.CargoRepository;
+import org.quantum.rms.model.Cargo;
+import org.quantum.rms.repository.CargoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

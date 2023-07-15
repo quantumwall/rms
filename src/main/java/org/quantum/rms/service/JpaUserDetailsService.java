@@ -1,7 +1,7 @@
-package org.quantum.rms.services;
+package org.quantum.rms.service;
 
-import org.quantum.rms.models.SecurityUser;
-import org.quantum.rms.repositories.UserRepository;
+import org.quantum.rms.model.SecurityUser;
+import org.quantum.rms.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

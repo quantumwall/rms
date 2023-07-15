@@ -1,6 +1,6 @@
-package org.quantum.rms.views;
+package org.quantum.rms.view;
 
-import org.quantum.rms.services.SecurityService;
+import org.quantum.rms.service.SecurityService;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;

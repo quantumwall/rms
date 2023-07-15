@@ -1,8 +1,8 @@
-package org.quantum.rms.repositories;
+package org.quantum.rms.repository;
 
 import java.util.List;
 
-import org.quantum.rms.models.Route;
+import org.quantum.rms.model.Route;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

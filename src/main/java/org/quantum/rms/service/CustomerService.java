@@ -1,10 +1,10 @@
-package org.quantum.rms.services;
+package org.quantum.rms.service;
 
 import java.util.List;
 import java.util.Objects;
 
-import org.quantum.rms.models.Customer;
-import org.quantum.rms.repositories.CustomerRepository;
+import org.quantum.rms.model.Customer;
+import org.quantum.rms.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

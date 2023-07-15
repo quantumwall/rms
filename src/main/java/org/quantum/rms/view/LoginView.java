@@ -1,4 +1,4 @@
-package org.quantum.rms.views;
+package org.quantum.rms.view;
 
 import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
