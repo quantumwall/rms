@@ -32,13 +32,4 @@ public class SecurityConfig extends VaadinWebSecurity {
     PasswordEncoder passwordEncoder() {
 	return new BCryptPasswordEncoder();
     }
-
-//    @Bean
-//    UserDetailsService userDetailsService(UserRepository userRepository) {
-//	return username -> {
-//	    return userRepository.findByEmail(username).map(SecurityUser::new)
-//		    .orElseThrow(() -> new UsernameNotFoundException("%s is not found".formatted(username)));
-//	};
-//    }
-
 }
