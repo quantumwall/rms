@@ -41,16 +41,15 @@ public class RegistrationView extends Composite<Component> {
 	var form = new RegistrationForm(userService);
 	form.addRegistrationListener(e -> saveUser(e.getUser()));
 
-	var label = new Div(new Text("Регистрация"));
+	var label = new Div(new Text(getTranslation("view.registration.title")));
 	label.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.FontWeight.BOLD);
-
+	
 	var content = new VerticalLayout();
 	content.setSizeFull();
 	content.setAlignItems(Alignment.CENTER);
 	content.setJustifyContentMode(JustifyContentMode.CENTER);
 	content.setAlignSelf(Alignment.CENTER, form);
 	content.add(label, form);
-
 	return content;
     }
     
