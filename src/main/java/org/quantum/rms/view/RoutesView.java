@@ -15,12 +15,13 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
+import com.vaadin.flow.router.HasDynamicTitle;
 
 import jakarta.annotation.security.PermitAll;
 
 @com.vaadin.flow.router.Route(value = "", layout = MainLayout.class)
 @PermitAll
-public class RoutesView extends VerticalLayout {
+public class RoutesView extends VerticalLayout implements HasDynamicTitle {
 
     private static final long serialVersionUID = 1L;
     private final RouteService routeService;
@@ -46,9 +47,9 @@ public class RoutesView extends VerticalLayout {
 	searchField = new TextField();
 	searchField.addValueChangeListener(e -> updateList());
 	searchField.setValueChangeMode(ValueChangeMode.LAZY);
-	searchField.setPlaceholder("Поиск...");
+	searchField.setPlaceholder(getTranslation("view.routes.field.search"));
 	searchField.setClearButtonVisible(true);
-	var addRouteButton = new Button("Добавить маршрут");
+	var addRouteButton = new Button(getTranslation("view.routes.button.add"));
 	addRouteButton.addClickListener(e -> addRoute());
 	return new HorizontalLayout(searchField, addRouteButton);
     }
@@ -68,11 +69,11 @@ public class RoutesView extends VerticalLayout {
 
     private void configureGrid() {
 	grid.setSizeFull();
-	grid.addColumn(r -> r.getCargo().getName()).setHeader("Груз");
-	grid.addColumn(Route::getDepartureCity).setHeader("Город загрузки");
-	grid.addColumn(Route::getDestinationCity).setHeader("Город разгрузки");
-	grid.addColumn(Route::getShipmentDate).setHeader("Дата погрузки");
-	grid.addColumn(r -> r.getCustomer().getName()).setHeader("Заказчик").setSortable(true);
+	grid.addColumn(r -> r.getCargo().getName()).setHeader(getTranslation("view.routes.column.cargo"));
+	grid.addColumn(Route::getDepartureCity).setHeader(getTranslation("view.routes.column.departure_city"));
+	grid.addColumn(Route::getDestinationCity).setHeader(getTranslation("view.routes.column.destination_city"));
+	grid.addColumn(Route::getShipmentDate).setHeader(getTranslation("view.routes.column.shipment_date"));
+	grid.addColumn(r -> r.getCustomer().getName()).setHeader(getTranslation("view.routes.column.customer")).setSortable(true);
 	grid.getColumns().forEach(c -> c.setAutoWidth(true));
 	grid.asSingleSelect().addValueChangeListener(e -> editRoute(e.getValue()));
     }
@@ -120,6 +121,11 @@ public class RoutesView extends VerticalLayout {
     private void closeEditor() {
 	form.setRoute(null);
 	form.setVisible(false);
+    }
+
+    @Override
+    public String getPageTitle() {
+	return getTranslation("view.routes.page_title");
     }
 
 }

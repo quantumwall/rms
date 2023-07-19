@@ -4,7 +4,6 @@ import org.quantum.rms.model.User;
 import org.quantum.rms.service.UserService;
 import org.quantum.rms.view.form.RegistrationForm;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.Text;
@@ -13,15 +12,14 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.HasDynamicTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
-@Route("registration")
-@PageTitle("Регистрация")
 @AnonymousAllowed
-public class RegistrationView extends Composite<Component> {
+@Route("registration")
+public class RegistrationView extends Composite<Component> implements HasDynamicTitle {
 
     private static final long serialVersionUID = 1L;
     private final UserService userService;
@@ -41,9 +39,9 @@ public class RegistrationView extends Composite<Component> {
 	var form = new RegistrationForm(userService);
 	form.addRegistrationListener(e -> saveUser(e.getUser()));
 
-	var label = new Div(new Text(getTranslation("view.registration.title")));
+	var label = new Div(new Text(getTranslation("view.registration.label")));
 	label.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.FontWeight.BOLD);
-	
+
 	var content = new VerticalLayout();
 	content.setSizeFull();
 	content.setAlignItems(Alignment.CENTER);
@@ -52,11 +50,16 @@ public class RegistrationView extends Composite<Component> {
 	content.add(label, form);
 	return content;
     }
-    
+
     private void saveUser(User user) {
 	user.setPassword(passwordEncoder.encode(user.getPassword()));
 	userService.save(user);
 	UI.getCurrent().navigate(RoutesView.class);
+    }
+
+    @Override
+    public String getPageTitle() {
+	return getTranslation("view.registration.page_title");
     }
 
 }

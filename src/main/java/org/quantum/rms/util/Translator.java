@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import com.vaadin.flow.i18n.I18NProvider;
 import lombok.extern.slf4j.Slf4j;
 
-@Component
 @Slf4j
+@Component
 public class Translator implements I18NProvider {
 
     private static final long serialVersionUID = 1L;
@@ -35,7 +35,7 @@ public class Translator implements I18NProvider {
 	try {
 	    value = bundle.getString(key);
 	} catch (MissingResourceException e) {
-	    log.info("Missing resource: {}", e);
+	    log.warn("Missing resource: {}", e);
 	    return "! %s: %s".formatted(locale.getLanguage(), key);
 	}
 	if (params.length > 0) {

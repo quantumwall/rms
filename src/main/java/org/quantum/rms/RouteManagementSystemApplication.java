@@ -31,14 +31,19 @@ public class RouteManagementSystemApplication {
 	return args -> {
 	    var user1 = new User();
 	    var user2 = new User();
+	    var admin = new User();
 	    user1.setName("Петров Петр Петрович");
 	    user1.setEmail("user1@user1.com");
 	    user1.setPassword(encoder.encode("password"));
 	    user2.setName("Иванов Иван Иванович");
 	    user2.setEmail("user2@user2.com");
 	    user2.setPassword(encoder.encode("password"));
+	    admin.setName("admin");
+	    admin.setEmail("admin");
+	    admin.setPassword(encoder.encode("admin"));
 	    userService.save(user1);
 	    userService.save(user2);
+	    userService.save(admin);
 
 	    var driver1 = new Driver();
 	    var driver2 = new Driver();

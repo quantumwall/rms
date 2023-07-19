@@ -3,13 +3,11 @@ package org.quantum.rms.view.form;
 import org.quantum.rms.model.User;
 import org.quantum.rms.service.UserService;
 import org.quantum.rms.validator.UserExistsValidator;
-
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -22,18 +20,19 @@ public class RegistrationForm extends FormLayout {
 
     private static final long serialVersionUID = 1L;
     private final UserService userService;
-    private TextField name = new TextField(getTranslation("view.registration.name"));
-    private EmailField email = new EmailField(getTranslation("view.registration.email"));
-    private PasswordField password = new PasswordField(getTranslation("view.registration.password"));
-    private Button submitButton = new Button(getTranslation("view.registration.button.registration"));
+    private TextField name = new TextField(getTranslation("form.registration.name"));
+    private EmailField email = new EmailField(getTranslation("form.registration.email"));
+    private PasswordField password = new PasswordField(getTranslation("form.registration.password"));
+    private Button submitButton = new Button(getTranslation("form.registration.button.registration"));
     private Binder<User> binder = new BeanValidationBinder<>(User.class);
 
     public RegistrationForm(UserService userService) {
 	this.userService = userService;
 	binder.bindInstanceFields(this);
-	binder.forField(email).asRequired(getTranslation("view.registration.error.required_email"))
-		.withValidator(new EmailValidator(getTranslation("view.registration.error.invalid_email")))
-		.withValidator(new UserExistsValidator(getTranslation("view.registration.error.duplicate_email"), userService))
+	binder.forField(email).asRequired(getTranslation("form.registration.error.required_email"))
+		.withValidator(new EmailValidator(getTranslation("form.registration.error.invalid_email")))
+		.withValidator(
+			new UserExistsValidator(getTranslation("form.registration.error.duplicate_email"), userService))
 		.bind(User::getEmail, User::setEmail);
 	binder.setBean(new User());
 	submitButton.addClickListener(e -> validateAndRegister());

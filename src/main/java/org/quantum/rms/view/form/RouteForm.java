@@ -2,11 +2,9 @@ package org.quantum.rms.view.form;
 
 import java.util.List;
 import java.util.Objects;
-
 import org.quantum.rms.model.Customer;
 import org.quantum.rms.model.Driver;
 import org.quantum.rms.model.Route;
-
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
@@ -15,7 +13,6 @@ import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.BigDecimalField;
 import com.vaadin.flow.component.textfield.IntegerField;
@@ -28,20 +25,20 @@ import com.vaadin.flow.shared.Registration;
 public class RouteForm extends FormLayout {
 
     private static final long serialVersionUID = 1L;
-    private DatePicker shipmentDate = new DatePicker("Дата погрузки");
-    private TextField departureCity = new TextField("Город погрузки");
-    private TextField destinationCity = new TextField("Город разгрузки");
-    private IntegerField billNumber = new IntegerField("Номер акта/счета");
-    private BigDecimalField price = new BigDecimalField("Стоимость рейса");
-    private TextField cargoName = new TextField("Груз");
-    private NumberField cargoWeight = new NumberField("Вес");
-    private Checkbox paid = new Checkbox("Оплачен");
-    private ComboBox<Customer> customer = new ComboBox<>("Заказчик");
-    private ComboBox<Driver> driver = new ComboBox<>("Водитель");
+    private DatePicker shipmentDate = new DatePicker(getTranslation("form.route.shipment_date"));
+    private TextField departureCity = new TextField(getTranslation("form.route.departure_city"));
+    private TextField destinationCity = new TextField(getTranslation("form.route.destination_city"));
+    private IntegerField billNumber = new IntegerField(getTranslation("form.route.bill_number"));
+    private BigDecimalField price = new BigDecimalField(getTranslation("form.route.price"));
+    private TextField cargoName = new TextField(getTranslation("form.route.cargo"));
+    private NumberField cargoWeight = new NumberField(getTranslation("form.route.weight"));
+    private Checkbox paid = new Checkbox(getTranslation("form.route.paid"));
+    private ComboBox<Customer> customer = new ComboBox<>(getTranslation("form.route.customer"));
+    private ComboBox<Driver> driver = new ComboBox<>(getTranslation("form.route.driver"));
     private Binder<Route> binder = new BeanValidationBinder<>(Route.class);
-    private Button saveButton = new Button("Сохранить");
-    private Button deleteButton = new Button("Удалить");
-    private Button closeButton = new Button("Отменить");
+    private Button saveButton = new Button(getTranslation("form.route.button.save"));
+    private Button deleteButton = new Button(getTranslation("form.route.button.delete"));
+    private Button cancelButton = new Button(getTranslation("form.route.button.cancel"));
 
     public RouteForm(List<Customer> customers, List<Driver> drivers) {
 	binder.bindInstanceFields(this);
@@ -63,18 +60,16 @@ public class RouteForm extends FormLayout {
 	deleteButton.addClickListener(e -> fireEvent(new DeleteEvent(this, binder.getBean())));
 	deleteButton.setEnabled(false);
 
-	closeButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
-	closeButton.addClickListener(e -> fireEvent(new CloseEvent(this)));
+	cancelButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+	cancelButton.addClickListener(e -> fireEvent(new CloseEvent(this)));
 
-	var buttons = new HorizontalLayout(saveButton, deleteButton, closeButton);
+	var buttons = new HorizontalLayout(saveButton, deleteButton, cancelButton);
 	return buttons;
     }
 
     private void validateAndSave() {
 	if (binder.validate().isOk()) {
 	    fireEvent(new SaveEvent(this, binder.getBean()));
-	} else {
-	    Notification.show("Допущены ошибки при заполнении полей формы");
 	}
     }
 
