@@ -3,11 +3,17 @@ package org.quantum.rms.view.form;
 import org.quantum.rms.model.User;
 import org.quantum.rms.service.UserService;
 import org.quantum.rms.validator.UserExistsValidator;
+
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.formlayout.FormLayout.ResponsiveStep;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -16,7 +22,7 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.validator.EmailValidator;
 import com.vaadin.flow.shared.Registration;
 
-public class RegistrationForm extends FormLayout {
+public class RegistrationForm extends Composite<Component> {
 
     private static final long serialVersionUID = 1L;
     private final UserService userService;
@@ -36,15 +42,23 @@ public class RegistrationForm extends FormLayout {
 		.bind(User::getEmail, User::setEmail);
 	binder.setBean(new User());
 	submitButton.addClickListener(e -> validateAndRegister());
-	setWidth(300, Unit.PIXELS);
-	setResponsiveSteps(new ResponsiveStep("0", 1));
-	add(name, email, password, submitButton);
+
     }
 
     private void validateAndRegister() {
 	if (binder.validate().isOk()) {
 	    fireEvent(new RegistrationEvent(this, binder.getBean()));
 	}
+    }
+
+    @Override
+    protected Component initContent() {
+	var form = new FormLayout(name, email, password, submitButton);
+	form.setWidth(300, Unit.PIXELS);
+	form.setResponsiveSteps(new ResponsiveStep("0", 1));
+	var layout = new HorizontalLayout(form);
+	layout.setAlignItems(Alignment.CENTER);
+	return layout;
     }
 
     public static class RegistrationFormEvent extends ComponentEvent<RegistrationForm> {

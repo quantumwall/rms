@@ -1,26 +1,35 @@
 package org.quantum.rms.view;
 
+import org.quantum.rms.util.Translator;
+import org.quantum.rms.view.component.ChangeLocaleComponent;
+
 import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.login.LoginI18n;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
+import com.vaadin.flow.router.HasDynamicTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 @Route("login")
 @AnonymousAllowed
-public class LoginView extends VerticalLayout implements BeforeEnterObserver {
+public class LoginView extends VerticalLayout implements BeforeEnterObserver, HasDynamicTitle {
 
     private static final long serialVersionUID = 1L;
     private LoginForm form = new LoginForm();
+    private final Translator translator;
 
-    public LoginView() {
+    public LoginView(Translator translator) {
+	this.translator = translator;
 	setSizeFull();
 	setJustifyContentMode(JustifyContentMode.CENTER);
 	setAlignItems(Alignment.CENTER);
 	configureForm();
-	add(form);
+	var localeSwitcher = new ChangeLocaleComponent(translator);
+	add(form, localeSwitcher);
+	setAlignSelf(Alignment.END, localeSwitcher);
+	expand(form);
     }
 
     private void configureForm() {
@@ -49,6 +58,11 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
 	form.setError(event.getLocation().getQueryParameters().getParameters().containsKey("error"));
+    }
+
+    @Override
+    public String getPageTitle() {
+	return getTranslation("view.login.page_title");
     }
 
 }
