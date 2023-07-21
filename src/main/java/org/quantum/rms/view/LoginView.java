@@ -18,10 +18,9 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver, Ha
 
     private static final long serialVersionUID = 1L;
     private LoginForm form = new LoginForm();
-    private final Translator translator;
 
     public LoginView(Translator translator) {
-	this.translator = translator;
+//	this.translator = translator;
 	setSizeFull();
 	setJustifyContentMode(JustifyContentMode.CENTER);
 	setAlignItems(Alignment.CENTER);

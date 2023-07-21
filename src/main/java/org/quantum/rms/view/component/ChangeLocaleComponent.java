@@ -16,7 +16,7 @@ public class ChangeLocaleComponent extends Composite<Component> {
 
     private static final long serialVersionUID = 1L;
     private Translator translator;
-    
+
     public ChangeLocaleComponent(Translator transaltor) {
 	this.translator = transaltor;
     }
@@ -25,19 +25,17 @@ public class ChangeLocaleComponent extends Composite<Component> {
     protected Component initContent() {
 	var locale = new ComboBox<Locale>();
 	locale.setItems(translator.getProvidedLocales());
-	locale.setItemLabelGenerator(Locale::getCountry);
+	locale.setItemLabelGenerator(Locale::getLanguage);
 	locale.setWidth(5, Unit.EM);
 	locale.setValue(getLocale());
 	locale.addValueChangeListener(e -> changeLocale(e.getValue()));
 	var layout = new HorizontalLayout(locale);
-//	layout.setAlignSelf(Alignment.END, locale);
 	return layout;
     }
-    
+
     private void changeLocale(Locale locale) {
 	VaadinSession.getCurrent().setLocale(locale);
 	UI.getCurrent().getPage().reload();
     }
 
-    
 }

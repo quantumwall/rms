@@ -32,14 +32,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Имя должно быть указано")
+    @NotEmpty(message = "{constraint.user.name.empty}")
     private String name;
 
     @Column(unique = true)
     private String email;
 
-    @NotNull(message = "Пароль должен быть указан")
-    @Size(min = 2, message = "Пароль должен содержать не менее одного символа")
+    @NotNull(message = "{constraint.user.password.empty}")
+    @Size(min = 2, message = "{constraint.user.password.size}")
     private String password;
     private boolean isActive = true;
 
