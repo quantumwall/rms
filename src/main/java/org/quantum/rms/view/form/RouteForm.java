@@ -2,9 +2,11 @@ package org.quantum.rms.view.form;
 
 import java.util.List;
 import java.util.Objects;
+
 import org.quantum.rms.model.Customer;
 import org.quantum.rms.model.Driver;
 import org.quantum.rms.model.Route;
+
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
@@ -15,7 +17,6 @@ import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.BigDecimalField;
-import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
@@ -25,10 +26,12 @@ import com.vaadin.flow.shared.Registration;
 public class RouteForm extends FormLayout {
 
     private static final long serialVersionUID = 1L;
+    
+    //TODO: i18n datepicker
     private DatePicker shipmentDate = new DatePicker(getTranslation("form.route.shipment_date"));
     private TextField departureCity = new TextField(getTranslation("form.route.departure_city"));
     private TextField destinationCity = new TextField(getTranslation("form.route.destination_city"));
-    private IntegerField billNumber = new IntegerField(getTranslation("form.route.bill_number"));
+    private TextField billNumber = new TextField(getTranslation("form.route.bill_number"));
     private BigDecimalField price = new BigDecimalField(getTranslation("form.route.price"));
     private TextField cargoName = new TextField(getTranslation("form.route.cargo"));
     private NumberField cargoWeight = new NumberField(getTranslation("form.route.weight"));

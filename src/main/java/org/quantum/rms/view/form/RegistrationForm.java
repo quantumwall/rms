@@ -25,7 +25,6 @@ import com.vaadin.flow.shared.Registration;
 public class RegistrationForm extends Composite<Component> {
 
     private static final long serialVersionUID = 1L;
-    private final UserService userService;
     private TextField name = new TextField(getTranslation("form.registration.name"));
     private EmailField email = new EmailField(getTranslation("form.registration.email"));
     private PasswordField password = new PasswordField(getTranslation("form.registration.password"));
@@ -33,7 +32,6 @@ public class RegistrationForm extends Composite<Component> {
     private Binder<User> binder = new BeanValidationBinder<>(User.class);
 
     public RegistrationForm(UserService userService) {
-	this.userService = userService;
 	binder.bindInstanceFields(this);
 	binder.forField(email).asRequired(getTranslation("form.registration.error.required_email"))
 		.withValidator(new EmailValidator(getTranslation("form.registration.error.invalid_email")))

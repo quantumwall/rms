@@ -23,12 +23,10 @@ public class RegistrationView extends VerticalLayout implements HasDynamicTitle 
     private static final long serialVersionUID = 1L;
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
-    private final Translator translator;
 
     public RegistrationView(UserService userService, PasswordEncoder passwordEncoder, Translator translator) {
 	this.userService = userService;
 	this.passwordEncoder = passwordEncoder;
-	this.translator = translator;
 
 	var form = new RegistrationForm(userService);
 	form.addRegistrationListener(e -> saveUser(e.getUser()));

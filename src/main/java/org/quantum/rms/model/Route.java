@@ -17,7 +17,6 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.UniqueConstraint;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
@@ -42,22 +41,20 @@ public class Route {
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @PastOrPresent(message = "Указанная дата не может быть позднее сегодняшней")
+    @PastOrPresent(message = "{constraint.route.shipment_date.past_or_present}")
     private LocalDate shipmentDate;
 
-    @NotBlank(message = "Не указан город загрузки")
-    @Size(min = 2, max = 100, message = "Название города должно быть в промежутке 2 - 100 символов")
+    @NotBlank(message = "{constraint.route.city.not_blank}")
+    @Size(min = 2, max = 100, message = "{constraint.route.city.size}")
     private String departureCity;
 
-    @NotBlank(message = "Не указан город разгрузки")
-    @Size(min = 2, max = 100, message = "Название города должно быть в промежутке 2 - 100 символов")
+    @NotBlank(message = "{constraint.route.city.not_blank}")
+    @Size(min = 2, max = 100, message = "{constraint.route.city.size}")
     private String destinationCity;
 
-    @Max(value = Integer.MAX_VALUE, message = "Номер счета/акта превышает максимально допустимое значение 2147483647")
-    @Positive(message = "Номер счета/акта должно быть положительным числом")
-    private Integer billNumber;
+    private String billNumber;
 
-    @Positive(message = "Стоимость рейса должна быть положительным числом")
+    @Positive(message = "{constraint.route.price.positive}")
     private BigDecimal price;
 
     @Column(name = "is_paid")

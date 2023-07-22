@@ -80,7 +80,7 @@ public class RouteManagementSystemApplication {
 	    var route3 = new Route();
 	    var route4 = new Route();
 
-	    route1.setBillNumber(1234);
+	    route1.setBillNumber("1234");
 	    route1.setCargo(cargo1);
 	    route1.setCustomer(customer1);
 	    route1.setDepartureCity("Торбеево");
@@ -91,7 +91,7 @@ public class RouteManagementSystemApplication {
 	    route1.setShipmentDate(LocalDate.of(2023, 4, 15));
 	    route1.setUser(user1);
 
-	    route2.setBillNumber(2345);
+	    route2.setBillNumber("2345");
 	    route2.setCargo(cargo2);
 	    route2.setCustomer(customer1);
 	    route2.setDepartureCity("Волгоград");
@@ -102,7 +102,7 @@ public class RouteManagementSystemApplication {
 	    route2.setShipmentDate(LocalDate.of(2023, 4, 1));
 	    route2.setUser(user1);
 
-	    route3.setBillNumber(2134);
+	    route3.setBillNumber("2134");
 	    route3.setCargo(cargo3);
 	    route3.setCustomer(customer2);
 	    route3.setDepartureCity("Атяшево");
@@ -113,7 +113,7 @@ public class RouteManagementSystemApplication {
 	    route3.setShipmentDate(LocalDate.of(2023, 4, 10));
 	    route3.setUser(user2);
 
-	    route4.setBillNumber(8765);
+	    route4.setBillNumber("8765");
 	    route4.setCargo(cargo4);
 	    route4.setCustomer(customer1);
 	    route4.setDepartureCity("Самара");
