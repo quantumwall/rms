@@ -1,5 +1,6 @@
 package org.quantum.rms.view.form;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,8 +27,7 @@ import com.vaadin.flow.shared.Registration;
 public class RouteForm extends FormLayout {
 
     private static final long serialVersionUID = 1L;
-    
-    //TODO: i18n datepicker
+
     private DatePicker shipmentDate = new DatePicker(getTranslation("form.route.shipment_date"));
     private TextField departureCity = new TextField(getTranslation("form.route.departure_city"));
     private TextField destinationCity = new TextField(getTranslation("form.route.destination_city"));
@@ -51,8 +51,33 @@ public class RouteForm extends FormLayout {
 	driver.setItemLabelGenerator(Driver::getName);
 	binder.forField(cargoName).bind("cargo.name");
 	binder.forField(cargoWeight).bind("cargo.weight");
+	configureShipmentDate();
 	add(shipmentDate, departureCity, destinationCity, billNumber, price, paid, cargoName, cargoWeight, customer,
 		driver, createButtonLayout());
+    }
+
+    private void configureShipmentDate() {
+	var i18n = new DatePicker.DatePickerI18n();
+	i18n.setCancel(getTranslation("datepicker.button.cancel"));
+	i18n.setToday(getTranslation("datepicker.button.today"));
+	i18n.setMonthNames(
+		List.of(getTranslation("datepicker.month.january"), getTranslation("datepicker.month.february"),
+			getTranslation("datepicker.month.march"), getTranslation("datepicker.month.april"),
+			getTranslation("datepicker.month.may"), getTranslation("datepicker.month.june"),
+			getTranslation("datepicker.month.july"), getTranslation("datepicker.month.august"),
+			getTranslation("datepicker.month.september"), getTranslation("datepicker.month.october"),
+			getTranslation("datepicker.month.november"), getTranslation("datepicker.month.december")));
+	i18n.setWeekdaysShort(List.of(getTranslation("datepicker.shortday.sun"),
+		getTranslation("datepicker.shortday.mon"), getTranslation("datepicker.shortday.tue"),
+		getTranslation("datepicker.shortday.wed"), getTranslation("datepicker.shortday.thu"),
+		getTranslation("datepicker.shortday.fri"), getTranslation("datepicker.shortday.sat")));
+	i18n.setWeekdays(List.of(getTranslation("datepicker.day.sun"), getTranslation("datepicker.day.mon"),
+		getTranslation("datepicker.day.tue"), getTranslation("datepicker.day.wed"),
+		getTranslation("datepicker.day.thu"), getTranslation("datepicker.day.fri"),
+		getTranslation("datepicker.day.sat")));
+	i18n.setFirstDayOfWeek(1);
+	shipmentDate.setI18n(i18n);
+	shipmentDate.setMax(LocalDate.now());
     }
 
     private HorizontalLayout createButtonLayout() {
