@@ -3,6 +3,7 @@ package org.quantum.rms.service;
 import java.util.List;
 import java.util.Objects;
 
+import org.quantum.rms.exception.UserNotFoundException;
 import org.quantum.rms.model.Route;
 import org.quantum.rms.repository.RouteRepository;
 import org.springframework.stereotype.Service;
@@ -16,12 +17,15 @@ public class RouteService {
     private final CustomerService customerService;
     private final DriverService driverService;
     private final SecurityService securityService;
+    private final UserService userService;
 
-    public RouteService(RouteRepository routeRepository, CustomerService customerService, DriverService driverService, SecurityService securityService) {
+    public RouteService(RouteRepository routeRepository, CustomerService customerService, DriverService driverService,
+	    SecurityService securityService, UserService userService) {
 	this.routeRepository = routeRepository;
 	this.customerService = customerService;
 	this.driverService = driverService;
 	this.securityService = securityService;
+	this.userService = userService;
     }
 
     public List<Route> findAll(String filter) {
@@ -38,10 +42,8 @@ public class RouteService {
 
     @Transactional
     public void save(Route route) {
-//        var customer = customerService.findById(route.getCustomer().getId());
-//        var driver = driverService.findById(route.getDriver().getId());
-//        route.setCustomer(customer);
-//        route.setDriver(driver);
+	securityService.getAuthenticatedUser().ifPresent(au -> route.setUser(userService.findById(au.getId())
+		.orElseThrow(() -> new UserNotFoundException("User %d is not found".formatted(au.getId())))));
 	routeRepository.save(route);
     }
 

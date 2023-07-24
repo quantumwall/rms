@@ -2,6 +2,7 @@ package org.quantum.rms.view;
 
 import java.util.Objects;
 
+import org.quantum.rms.exception.UserNotFoundException;
 import org.quantum.rms.model.Route;
 import org.quantum.rms.service.CustomerService;
 import org.quantum.rms.service.DriverService;
@@ -9,8 +10,14 @@ import org.quantum.rms.service.RouteService;
 import org.quantum.rms.view.form.RouteForm;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -73,7 +80,8 @@ public class RoutesView extends VerticalLayout implements HasDynamicTitle {
 	grid.addColumn(Route::getDepartureCity).setHeader(getTranslation("view.routes.column.departure_city"));
 	grid.addColumn(Route::getDestinationCity).setHeader(getTranslation("view.routes.column.destination_city"));
 	grid.addColumn(Route::getShipmentDate).setHeader(getTranslation("view.routes.column.shipment_date"));
-	grid.addColumn(r -> r.getCustomer().getName()).setHeader(getTranslation("view.routes.column.customer")).setSortable(true);
+	grid.addColumn(r -> r.getCustomer().getName()).setHeader(getTranslation("view.routes.column.customer"))
+		.setSortable(true);
 	grid.getColumns().forEach(c -> c.setAutoWidth(true));
 	grid.asSingleSelect().addValueChangeListener(e -> editRoute(e.getValue()));
     }
@@ -91,9 +99,13 @@ public class RoutesView extends VerticalLayout implements HasDynamicTitle {
 	if (Objects.isNull(route)) {
 	    closeEditor();
 	} else {
-	    routeService.save(route);
-	    closeEditor();
-	    updateList();
+	    try {
+		routeService.save(route);
+		closeEditor();
+		updateList();
+	    } catch (UserNotFoundException e) {
+		showErrorNotification(e.getMessage());
+	    }
 	}
     }
 
@@ -126,6 +138,26 @@ public class RoutesView extends VerticalLayout implements HasDynamicTitle {
     @Override
     public String getPageTitle() {
 	return getTranslation("view.routes.page_title");
+    }
+
+    private void showErrorNotification(String message) {
+	var notification = new Notification();
+	notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+
+	Div text = new Div(new Text(message));
+
+	Button closeButton = new Button(new Icon("lumo", "cross"));
+	closeButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
+	closeButton.getElement().setAttribute("aria-label", "Close");
+	closeButton.addClickListener(event -> {
+	    notification.close();
+	});
+
+	HorizontalLayout layout = new HorizontalLayout(text, closeButton);
+	layout.setAlignItems(Alignment.CENTER);
+
+	notification.add(layout);
+	notification.open();
     }
 
 }
