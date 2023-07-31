@@ -7,14 +7,11 @@ import org.quantum.rms.view.component.ChangeLocaleComponent;
 import org.quantum.rms.view.form.RegistrationForm;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.HasDynamicTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
-import com.vaadin.flow.theme.lumo.LumoUtility;
 
 @AnonymousAllowed
 @Route("registration")
@@ -31,17 +28,13 @@ public class RegistrationView extends VerticalLayout implements HasDynamicTitle 
 	var form = new RegistrationForm(userService);
 	form.addRegistrationListener(e -> saveUser(e.getUser()));
 
-	var label = new Div(new Text(getTranslation("view.registration.label")));
-	label.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.FontWeight.BOLD);
-
 	var localeSwitcher = new ChangeLocaleComponent(translator);
 
-	add(label, form, localeSwitcher);
+	add(form, localeSwitcher);
 	setSizeFull();
-	setAlignItems(Alignment.CENTER);
-	setJustifyContentMode(JustifyContentMode.CENTER);
+	setAlignSelf(Alignment.END, form);
 	setAlignSelf(Alignment.END, localeSwitcher);
-	expand(label, form);
+	expand(form);
     }
 
     private void saveUser(User user) {
