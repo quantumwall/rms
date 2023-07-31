@@ -26,7 +26,7 @@ public class ChangeLocaleComponent extends Composite<Component> {
 	var locale = new ComboBox<Locale>();
 	locale.setItems(translator.getProvidedLocales());
 	locale.setItemLabelGenerator(Locale::getLanguage);
-	locale.setWidth(5, Unit.EM);
+	locale.setWidth(4, Unit.EM);
 	locale.setValue(getLocale());
 	locale.addValueChangeListener(e -> changeLocale(e.getValue()));
 	var layout = new HorizontalLayout(locale);

@@ -1,6 +1,8 @@
 package org.quantum.rms.view;
 
 import org.quantum.rms.service.SecurityService;
+import org.quantum.rms.util.Translator;
+import org.quantum.rms.view.component.ChangeLocaleComponent;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -20,9 +22,11 @@ public class MainLayout extends AppLayout {
 
     private static final long serialVersionUID = 1L;
     private final SecurityService securityService;
+    private final Translator translator;
 
-    public MainLayout(SecurityService securityService) {
+    public MainLayout(SecurityService securityService, Translator translator) {
 	this.securityService = securityService;
+	this.translator = translator;
 	addToNavbar(getHeader());
 	addToDrawer(getMenu());
     }
@@ -37,7 +41,8 @@ public class MainLayout extends AppLayout {
 	var label = new H3(getTranslation("layout.main.label"));
 	var logoutButton = new Button(getTranslation("layout.main.button.logout"), e -> securityService.logout());
 	logoutButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
-	var header = new HorizontalLayout(new DrawerToggle(), label, logoutButton);
+	var localeSwitcher = new ChangeLocaleComponent(translator);
+	var header = new HorizontalLayout(new DrawerToggle(), label, localeSwitcher, logoutButton);
 	header.setWidthFull();
 	header.addClassNames(LumoUtility.Padding.Horizontal.MEDIUM);
 	header.expand(label);

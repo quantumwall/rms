@@ -3,6 +3,7 @@ package org.quantum.rms.view;
 import org.quantum.rms.util.Translator;
 import org.quantum.rms.view.component.ChangeLocaleComponent;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.login.LoginI18n;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -34,6 +35,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver, Ha
     private void configureForm() {
 	form.setAction("login");
 	form.setI18n(getI18n());
+	form.addForgotPasswordListener(e -> UI.getCurrent().navigate(RegistrationView.class));
     }
 
     private LoginI18n getI18n() {
