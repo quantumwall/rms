@@ -26,6 +26,10 @@ public class SecurityUser implements UserDetails {
     public Role getRole() {
 	return user.getRole();
     }
+    
+    public User getUser() {
+	return user;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

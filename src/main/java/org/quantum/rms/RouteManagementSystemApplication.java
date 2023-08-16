@@ -43,16 +43,16 @@ public class RouteManagementSystemApplication {
 	    admin.setEmail("admin");
 	    admin.setPassword(encoder.encode("admin"));
 	    admin.setRole(Role.ADMIN);
-	    userService.save(user1);
-	    userService.save(user2);
-	    userService.save(admin);
+	    
 
 	    var driver1 = new Driver();
 	    var driver2 = new Driver();
 	    driver1.setName("Сидоров Сидор Сидорович");
 	    driver2.setName("Алексеев Алексей Алексеевич");
-	    driverService.save(driver1);
-	    driverService.save(driver2);
+	    
+	    user1.addDriver(driver1);
+	    user2.addDriver(driver2);
+	    
 
 	    var customer1 = new Customer();
 	    var customer2 = new Customer();
@@ -60,9 +60,11 @@ public class RouteManagementSystemApplication {
 	    customer1.setName("Талина");
 	    customer2.setName("Крафтер");
 	    customer3.setName("Монополия");
-	    customerService.save(customer1);
-	    customerService.save(customer2);
-	    customerService.save(customer3);
+	    
+	    user1.addCustomer(customer1);
+	    user1.addCustomer(customer2);
+	    user2.addCustomer(customer3);
+	    
 
 	    var cargo1 = new Cargo();
 	    var cargo2 = new Cargo();
@@ -126,6 +128,17 @@ public class RouteManagementSystemApplication {
 	    route4.setShipmentDate(LocalDate.of(2023, 3, 30));
 	    route4.setUser(user2);
 
+	    userService.save(user1);
+	    userService.save(user2);
+	    userService.save(admin);
+	    
+//	    driverService.save(driver1);
+//	    driverService.save(driver2);
+//	    
+//	    customerService.save(customer1);
+//	    customerService.save(customer2);
+//	    customerService.save(customer3);
+	    
 	    routeService.save(route1);
 	    routeService.save(route2);
 	    routeService.save(route3);
