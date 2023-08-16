@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class SecurityUser implements UserDetails {
 
     private static final long serialVersionUID = 1L;
+    private final static String ROLE_PREFIX = "ROLE_";
     private final User user;
 
     public SecurityUser(User user) {
@@ -21,10 +22,14 @@ public class SecurityUser implements UserDetails {
     public Long getId() {
 	return user.getId();
     }
+    
+    public Role getRole() {
+	return user.getRole();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-	return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+	return List.of(new SimpleGrantedAuthority("%s%s".formatted(ROLE_PREFIX, user.getRole().name())));
     }
 
     @Override

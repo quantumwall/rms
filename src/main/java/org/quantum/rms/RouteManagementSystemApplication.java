@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import org.quantum.rms.model.Cargo;
 import org.quantum.rms.model.Customer;
 import org.quantum.rms.model.Driver;
+import org.quantum.rms.model.Role;
 import org.quantum.rms.model.Route;
 import org.quantum.rms.model.User;
 import org.quantum.rms.service.CustomerService;
@@ -41,6 +42,7 @@ public class RouteManagementSystemApplication {
 	    admin.setName("admin");
 	    admin.setEmail("admin");
 	    admin.setPassword(encoder.encode("admin"));
+	    admin.setRole(Role.ADMIN);
 	    userService.save(user1);
 	    userService.save(user2);
 	    userService.save(admin);

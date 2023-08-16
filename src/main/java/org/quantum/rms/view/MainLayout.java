@@ -32,9 +32,14 @@ public class MainLayout extends AppLayout {
     }
 
     private Component getMenu() {
-	var tabs = new Tabs(new Tab(new RouterLink(getTranslation("layout.main.link.routes"), RoutesView.class)));
+	var tabs = new Tabs(getMenuItems());
 	tabs.setOrientation(Orientation.VERTICAL);
 	return tabs;
+    }
+
+    private Tab[] getMenuItems() {
+	return new Tab[] { new Tab(new RouterLink(getTranslation("layout.main.link.routes"), RoutesView.class)),
+		new Tab(new RouterLink(getTranslation("layout.main.link.settings"), SettingsView.class)) };
     }
 
     private Component getHeader() {
