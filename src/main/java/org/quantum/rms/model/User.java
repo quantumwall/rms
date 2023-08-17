@@ -15,8 +15,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
@@ -59,14 +57,10 @@ public class User {
     @JoinColumn(name = "user_id")
     private List<Route> routes = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_driver", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
-	    @JoinColumn(name = "driver_id") })
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<Driver> drivers = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_customer", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
-	    @JoinColumn(name = "customer_id") })
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<Customer> customers = new HashSet<>();
     
     public void addDriver(Driver driver) {

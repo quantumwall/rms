@@ -48,7 +48,9 @@ public class RouteManagementSystemApplication {
 	    var driver1 = new Driver();
 	    var driver2 = new Driver();
 	    driver1.setName("Сидоров Сидор Сидорович");
+	    driver1.setUser(user1);
 	    driver2.setName("Алексеев Алексей Алексеевич");
+	    driver2.setUser(user2);
 	    
 	    user1.addDriver(driver1);
 	    user2.addDriver(driver2);
@@ -58,8 +60,11 @@ public class RouteManagementSystemApplication {
 	    var customer2 = new Customer();
 	    var customer3 = new Customer();
 	    customer1.setName("Талина");
+	    customer1.setUser(user1);
 	    customer2.setName("Крафтер");
+	    customer2.setUser(user1);
 	    customer3.setName("Монополия");
+	    customer3.setUser(user2);
 	    
 	    user1.addCustomer(customer1);
 	    user1.addCustomer(customer2);

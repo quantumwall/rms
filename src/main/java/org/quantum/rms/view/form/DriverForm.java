@@ -1,38 +1,27 @@
 package org.quantum.rms.view.form;
 
-
-import org.quantum.rms.model.Customer;
 import org.quantum.rms.model.Driver;
 
-import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.function.SerializableRunnable;
 
-public class DriverForm extends Composite<Component> {
+public class DriverForm extends FormLayout {
 
     private static final long serialVersionUID = 1L;
-    private TextField name = new TextField("Customer name");
-    private final BeanValidationBinder<Driver> binder = new BeanValidationBinder<>(Driver.class);
-    private final SerializableRunnable saveListener;
+    private TextField name = new TextField("Driver name");
 
     public DriverForm(Driver driver, SerializableRunnable saveListener) {
-	this.saveListener = saveListener;
-	binder.forField(name).bind("name");
+	BeanValidationBinder<Driver> binder = new BeanValidationBinder<>(Driver.class);
+	binder.bindInstanceFields(this);
 	binder.setBean(driver);
-    }
-
-    @Override
-    protected Component initContent() {
-	return new VerticalLayout(name, new Button("Save", e -> {
-	    if (binder.isValid()) {
+	add(name, new Button("Save", e -> {
+	    if (binder.validate().isOk()) {
 		saveListener.run();
 	    }
 	}));
     }
-
 
 }

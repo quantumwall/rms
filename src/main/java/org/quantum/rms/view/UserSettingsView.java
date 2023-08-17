@@ -1,13 +1,10 @@
 package org.quantum.rms.view;
 
-import java.util.Objects;
-
 import org.quantum.rms.model.Customer;
 import org.quantum.rms.model.Driver;
 import org.quantum.rms.model.User;
 import org.quantum.rms.service.CustomerService;
 import org.quantum.rms.service.DriverService;
-import org.quantum.rms.service.UserService;
 import org.quantum.rms.view.form.CustomerForm;
 import org.quantum.rms.view.form.DriverForm;
 
@@ -20,6 +17,7 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 
 public class UserSettingsView extends Composite<Component> {
 
@@ -27,47 +25,32 @@ public class UserSettingsView extends Composite<Component> {
     private final User user;
     private final DriverService driverService;
     private final CustomerService customerService;
-    private final UserService userService;
-    private ComboBox<Driver> drivers = new ComboBox<>();
-    private ComboBox<Customer> customers = new ComboBox<>();
+    private ComboBox<Driver> drivers = new ComboBox<>("Drivers");
+    private ComboBox<Customer> customers = new ComboBox<>("Customers");
 
-    public UserSettingsView(User user, DriverService driverService, CustomerService customerService,
-	    UserService userService) {
+    public UserSettingsView(User user, DriverService driverService, CustomerService customerService) {
 	this.user = user;
 	this.driverService = driverService;
 	this.customerService = customerService;
-	this.userService = userService;
     }
 
     @Override
     protected Component initContent() {
-	
-	return new HorizontalLayout(getDriversSection());
+
+	return new VerticalLayout(getDriversSection(), getCustomersSection());
     }
 
     private Component getDriversSection() {
-	var driversSection = new VerticalLayout();
+	var driversSection = new HorizontalLayout();
 	drivers.setItems(user.getDrivers());
 	drivers.setItemLabelGenerator(Driver::getName);
 	var addButton = new Button(new Icon(VaadinIcon.PLUS));
 	addButton.addClickListener(e -> showDriverForm(new Driver()));
-	var removeButton = new Button(new Icon(VaadinIcon.CLOSE_SMALL));
-	drivers.addValueChangeListener(e -> removeButton.setEnabled(Objects.nonNull(e.getValue())));
-	removeButton.setEnabled(Objects.nonNull(drivers.getValue()));
-//	removeButton.addClickListener(e -> deleteDriver(drivers.getValue()));
-	driversSection.add(drivers, new HorizontalLayout(addButton, removeButton));
+	var editButton = new Button(VaadinIcon.PENCIL.create());
+	driversSection.add(drivers, addButton, editButton);
+	driversSection.setAlignItems(Alignment.BASELINE);
 	return driversSection;
     }
-    
-//    private void deleteDriver(Driver driver) {
-//	userService.findById(user.getId()).ifPresent(u -> {
-//	    u.deleteDriver(driver);
-//	    user.deleteDriver(driver);
-//	    userService.save(u);
-//	});
-////	driverService.delete(driver);
-//	updateDriversList();
-//    }
 
     private void showDriverForm(Driver driver) {
 	var dialog = new Dialog();
@@ -81,13 +64,11 @@ public class UserSettingsView extends Composite<Component> {
     }
 
     private void saveDriver(Driver driver) {
-	userService.findById(user.getId()).ifPresent(u -> {
-	    u.addDriver(driver);
-	    user.addDriver(driver);
-	    userService.save(u);
-	});
+	driver.setUser(user);
+	user.addDriver(driver);
+	driverService.save(driver);
     }
-    
+
     private void updateDriversList() {
 	drivers.setItems(user.getDrivers());
     }
@@ -104,25 +85,23 @@ public class UserSettingsView extends Composite<Component> {
     }
 
     private void saveCustomer(Customer customer) {
-	userService.findById(user.getId()).ifPresent(u -> {
-	    u.addCustomer(customer);
-	    user.addCustomer(customer);
-	    userService.save(u);
-	});
+	customer.setUser(user);
+	user.addCustomer(customer);
+	customerService.save(customer);
     }
-
-    
 
     private void updateCustomersList() {
 	customers.setItems(user.getCustomers());
     }
 
-    private Component getCustomersSection(User user) {
-	var customersSection = new VerticalLayout();
-	var customers = new ComboBox<Customer>("Customers");
+    private Component getCustomersSection() {
+	var customersSection = new HorizontalLayout();
 	customers.setItems(user.getCustomers());
 	customers.setItemLabelGenerator(Customer::getName);
-	customersSection.add(customers);
+	var addButton = new Button(VaadinIcon.PLUS.create(), e -> showCustomerForm(new Customer()));
+	var editButton = new Button(VaadinIcon.PENCIL.create());
+	customersSection.add(customers, addButton, editButton);
+	customersSection.setAlignItems(Alignment.BASELINE);
 	return customersSection;
     }
 }
