@@ -15,7 +15,7 @@ public class CustomerForm extends FormLayout {
 
     public CustomerForm(Customer customer, SerializableRunnable saveListener) {
 	BeanValidationBinder<Customer> binder = new BeanValidationBinder<>(Customer.class);
-	binder.forField(name).bind("name");
+	binder.bindInstanceFields(this);
 	binder.setBean(customer);
 	add(name, new Button("Save", e -> {
 	    if (binder.validate().isOk()) {

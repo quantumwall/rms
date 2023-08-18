@@ -44,7 +44,7 @@ public class UserSettingsView extends Composite<Component> {
 
     private Component getDriversSection() {
 	var driversSection = new HorizontalLayout();
-	drivers.setItems(user.getDrivers());
+	updateDriversList();
 	drivers.setItemLabelGenerator(Driver::getName);
 	var addButton = new Button(new Icon(VaadinIcon.PLUS), e -> showDriverForm(new Driver()));
 	var editButton = new Button(VaadinIcon.PENCIL.create(), e -> showDriverForm(drivers.getValue()));
@@ -78,7 +78,7 @@ public class UserSettingsView extends Composite<Component> {
 
     private Component getCustomersSection() {
 	var customersSection = new HorizontalLayout();
-	customers.setItems(user.getCustomers());
+	updateCustomersList();
 	customers.setItemLabelGenerator(Customer::getName);
 	var addButton = new Button(VaadinIcon.PLUS.create(), e -> showCustomerForm(new Customer()));
 	var editButton = new Button(VaadinIcon.PENCIL.create(), e -> showCustomerForm(customers.getValue()));
