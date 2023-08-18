@@ -1,5 +1,7 @@
 package org.quantum.rms.view;
 
+import java.util.Objects;
+
 import org.quantum.rms.model.Customer;
 import org.quantum.rms.model.Driver;
 import org.quantum.rms.model.User;
@@ -44,9 +46,10 @@ public class UserSettingsView extends Composite<Component> {
 	var driversSection = new HorizontalLayout();
 	drivers.setItems(user.getDrivers());
 	drivers.setItemLabelGenerator(Driver::getName);
-	var addButton = new Button(new Icon(VaadinIcon.PLUS));
-	addButton.addClickListener(e -> showDriverForm(new Driver()));
-	var editButton = new Button(VaadinIcon.PENCIL.create());
+	var addButton = new Button(new Icon(VaadinIcon.PLUS), e -> showDriverForm(new Driver()));
+	var editButton = new Button(VaadinIcon.PENCIL.create(), e -> showDriverForm(drivers.getValue()));
+	editButton.setEnabled(Objects.nonNull(drivers.getValue()));
+	drivers.addValueChangeListener(e -> editButton.setEnabled(Objects.nonNull(e.getValue())));
 	driversSection.add(drivers, addButton, editButton);
 	driversSection.setAlignItems(Alignment.BASELINE);
 	return driversSection;
@@ -73,6 +76,19 @@ public class UserSettingsView extends Composite<Component> {
 	drivers.setItems(user.getDrivers());
     }
 
+    private Component getCustomersSection() {
+	var customersSection = new HorizontalLayout();
+	customers.setItems(user.getCustomers());
+	customers.setItemLabelGenerator(Customer::getName);
+	var addButton = new Button(VaadinIcon.PLUS.create(), e -> showCustomerForm(new Customer()));
+	var editButton = new Button(VaadinIcon.PENCIL.create(), e -> showCustomerForm(customers.getValue()));
+	editButton.setEnabled(Objects.nonNull(customers.getValue()));
+	customers.addValueChangeListener(e -> editButton.setEnabled(Objects.nonNull(e.getValue())));
+	customersSection.add(customers, addButton, editButton);
+	customersSection.setAlignItems(Alignment.BASELINE);
+	return customersSection;
+    }
+
     private void showCustomerForm(Customer customer) {
 	var dialog = new Dialog();
 	dialog.open();
@@ -94,14 +110,4 @@ public class UserSettingsView extends Composite<Component> {
 	customers.setItems(user.getCustomers());
     }
 
-    private Component getCustomersSection() {
-	var customersSection = new HorizontalLayout();
-	customers.setItems(user.getCustomers());
-	customers.setItemLabelGenerator(Customer::getName);
-	var addButton = new Button(VaadinIcon.PLUS.create(), e -> showCustomerForm(new Customer()));
-	var editButton = new Button(VaadinIcon.PENCIL.create());
-	customersSection.add(customers, addButton, editButton);
-	customersSection.setAlignItems(Alignment.BASELINE);
-	return customersSection;
-    }
 }

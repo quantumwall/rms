@@ -8,13 +8,12 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Composite;
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.formlayout.FormLayout.ResponsiveStep;
-import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
@@ -24,7 +23,6 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.validator.EmailValidator;
 import com.vaadin.flow.shared.Registration;
-import com.vaadin.flow.theme.lumo.LumoUtility;
 
 public class RegistrationForm extends Composite<Component> {
 
@@ -55,14 +53,12 @@ public class RegistrationForm extends Composite<Component> {
 
     @Override
     protected Component initContent() {
-	var form = new FormLayout(name, email, password, submitButton);
+	var label = new H2(getTranslation("view.registration.label"));
+	var form = new FormLayout(label, name, email, password, submitButton);
 	form.setWidth(300, Unit.PIXELS);
 	form.setResponsiveSteps(new ResponsiveStep("0", 1));
-	var label = new Div(new Text(getTranslation("view.registration.label")));
-	label.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.FontWeight.BOLD);
-	var layout = new VerticalLayout(label, form);
+	var layout = new VerticalLayout(form);
 	layout.setAlignSelf(Alignment.CENTER, form);
-	layout.setAlignItems(Alignment.CENTER);
 	return layout;
     }
 

@@ -37,7 +37,7 @@ public class SettingsView extends Composite<Component> {
     protected Component initContent() {
 	var role = user.getRole();
 	return switch (role) {
-	case ADMIN -> new AdminSettingsView();
+	case ADMIN -> new AdminSettingsView(userService);
 	default -> new UserSettingsView(user, driverService, customerService);
 	};
     }

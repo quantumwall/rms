@@ -10,6 +10,7 @@ import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.tabs.Tab;
@@ -38,8 +39,8 @@ public class MainLayout extends AppLayout {
     }
 
     private Tab[] getMenuItems() {
-	return new Tab[] { new Tab(new RouterLink(getTranslation("layout.main.link.routes"), RoutesView.class)),
-		new Tab(new RouterLink(getTranslation("layout.main.link.settings"), SettingsView.class)) };
+	return new Tab[] { new Tab(VaadinIcon.TRUCK.create(), new RouterLink(getTranslation("layout.main.link.routes"), RoutesView.class)),
+		new Tab(VaadinIcon.COG.create(), new RouterLink(getTranslation("layout.main.link.settings"), SettingsView.class)) };
     }
 
     private Component getHeader() {
