@@ -35,13 +35,13 @@ public class RouteManagementSystemApplication {
 	    var admin = new User();
 	    user1.setName("Петров Петр Петрович");
 	    user1.setEmail("user1@user1.com");
-	    user1.setPassword("password");
+	    user1.setPassword(encoder.encode("password"));
 	    user2.setName("Иванов Иван Иванович");
 	    user2.setEmail("user2@user2.com");
-	    user2.setPassword("password");
+	    user2.setPassword(encoder.encode("password"));
 	    admin.setName("admin");
 	    admin.setEmail("admin");
-	    admin.setPassword("admin");
+	    admin.setPassword(encoder.encode("admin"));
 	    admin.setRole(Role.ADMIN);
 	    
 

@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.quantum.rms.model.User;
 import org.quantum.rms.repository.UserRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,21 +14,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository) {
 	this.userRepository = userRepository;
-	this.passwordEncoder = passwordEncoder;
     }
 
     public List<User> findAll() {
 	return userRepository.findAll();
     }
 
-    public Optional<User>findById(Long id) {
+    public Optional<User> findById(Long id) {
 	return userRepository.findById(id);
     }
-    
+
     public Optional<User> findByEmail(String email) {
 	return userRepository.findByEmail(email);
     }
@@ -37,7 +34,6 @@ public class UserService {
     @Transactional
     public User save(User user) {
 	if (Objects.nonNull(user)) {
-	    user.setPassword(passwordEncoder.encode(user.getPassword()));
 	    userRepository.save(user);
 	}
 	return user;
