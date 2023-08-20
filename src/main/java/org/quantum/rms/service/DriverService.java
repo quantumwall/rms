@@ -1,5 +1,6 @@
 package org.quantum.rms.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,13 +14,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class DriverService {
 
     private final DriverRepository driverRepository;
+    private final SecurityService securityService;
 
-    public DriverService(DriverRepository driverRepository) {
+    public DriverService(DriverRepository driverRepository, SecurityService securityService) {
 	this.driverRepository = driverRepository;
+	this.securityService = securityService;
     }
 
     public List<Driver> findAll() {
-	return driverRepository.findAll();
+	return securityService.getAuthenticatedUser().map(u -> driverRepository.findAllByUserId(u.getId()))
+		.orElse(Collections.emptyList());
     }
 
     public Driver findById(long id) {

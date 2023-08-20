@@ -1,5 +1,6 @@
 package org.quantum.rms.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,13 +14,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final SecurityService securityService;
 
-    public CustomerService(CustomerRepository customerRepository) {
+    public CustomerService(CustomerRepository customerRepository, SecurityService securityService) {
 	this.customerRepository = customerRepository;
+	this.securityService = securityService;
     }
 
     public List<Customer> findAll() {
-	return customerRepository.findAll();
+	return securityService.getAuthenticatedUser().map(u -> customerRepository.findAllByUserId(u.getId()))
+		.orElse(Collections.emptyList());
     }
 
     public Customer findById(long id) {
