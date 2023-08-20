@@ -17,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -43,6 +44,7 @@ public class User {
     private String name;
 
     @Column(unique = true)
+    @NotBlank(message = "{constraint.user.email.empty}")
     private String email;
 
     @NotNull(message = "{constraint.user.password.empty}")
@@ -62,19 +64,19 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<Customer> customers = new HashSet<>();
-    
+
     public void addDriver(Driver driver) {
 	drivers.add(driver);
     }
-    
+
     public void deleteDriver(Driver driver) {
 	drivers.remove(driver);
     }
-    
+
     public void addCustomer(Customer customer) {
 	customers.add(customer);
     }
-    
+
     public void deleteCustomer(Customer customer) {
 	customers.remove(customer);
     }

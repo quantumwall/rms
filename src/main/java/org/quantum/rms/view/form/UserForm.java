@@ -16,17 +16,17 @@ import com.vaadin.flow.function.SerializableRunnable;
 public class UserForm extends FormLayout {
 
     private static final long serialVersionUID = 1L;
-    private TextField name = new TextField("Name");
-    private EmailField email = new EmailField("Email");
-    private PasswordField password = new PasswordField("Password");
-    private ComboBox<Role> role = new ComboBox<>();
+    private TextField name = new TextField(getTranslation("form.user.field.name"));
+    private EmailField email = new EmailField(getTranslation("form.user.field.email"));
+    private PasswordField password = new PasswordField(getTranslation("form.user.field.password"));
+    private ComboBox<Role> role = new ComboBox<>(getTranslation("form.user.field.role"));
 
     public UserForm(User user, SerializableRunnable saveListener) {
 	configureRoles();
 	var binder = new BeanValidationBinder<User>(User.class);
 	binder.bindInstanceFields(this);
 	binder.setBean(user);
-	var addButton = new Button("Save", e -> {
+	var addButton = new Button(getTranslation("form.user.button.save"), e -> {
 	    if (binder.validate().isOk()) {
 		saveListener.run();
 	    }

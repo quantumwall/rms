@@ -11,13 +11,13 @@ import com.vaadin.flow.function.SerializableRunnable;
 public class CustomerForm extends FormLayout {
 
     private static final long serialVersionUID = 1L;
-    private TextField name = new TextField("Customer name");
+    private TextField name = new TextField(getTranslation("form.customer.field.name"));
 
     public CustomerForm(Customer customer, SerializableRunnable saveListener) {
 	BeanValidationBinder<Customer> binder = new BeanValidationBinder<>(Customer.class);
 	binder.bindInstanceFields(this);
 	binder.setBean(customer);
-	add(name, new Button("Save", e -> {
+	add(name, new Button(getTranslation("form.customer.button.save"), e -> {
 	    if (binder.validate().isOk()) {
 		saveListener.run();
 	    }

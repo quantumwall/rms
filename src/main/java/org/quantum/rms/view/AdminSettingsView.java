@@ -21,7 +21,7 @@ public class AdminSettingsView extends Composite<Component> {
 
     private static final long serialVersionUID = 1L;
     private final UserService userService;
-    private final ComboBox<User> users = new ComboBox<>("Users");
+    private final ComboBox<User> users = new ComboBox<>(getTranslation("view.settings.admin.users"));
     private final PasswordEncoder passwordEncoder;
 
     public AdminSettingsView(UserService userService, PasswordEncoder passwordEncoder) {
@@ -38,8 +38,10 @@ public class AdminSettingsView extends Composite<Component> {
 	updateUsersList();
 	users.setItemLabelGenerator(User::getName);
 	var addButton = new Button(VaadinIcon.PLUS.create(), e -> showUserForm(new User()));
+	addButton.setTooltipText(getTranslation("view.settings.admin.button.add.user"));
 	var editButton = new Button(VaadinIcon.PENCIL.create(), e -> showUserForm(users.getValue()));
 	editButton.setEnabled(Objects.nonNull(users.getValue()));
+	editButton.setTooltipText(getTranslation("view.settings.admin.button.edit.user"));
 	users.addValueChangeListener(e -> editButton.setEnabled(Objects.nonNull(e.getValue())));
 	var layout = new HorizontalLayout(users, addButton, editButton);
 	layout.setAlignItems(Alignment.BASELINE);

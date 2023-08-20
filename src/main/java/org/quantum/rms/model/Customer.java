@@ -25,7 +25,7 @@ public class Customer {
     private Long id;
 
     @NotBlank
-    private String name;
+    private String name = "";
     
     @ManyToOne
     private User user;

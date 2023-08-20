@@ -27,8 +27,8 @@ public class UserSettingsView extends Composite<Component> {
     private final User user;
     private final DriverService driverService;
     private final CustomerService customerService;
-    private ComboBox<Driver> drivers = new ComboBox<>("Drivers");
-    private ComboBox<Customer> customers = new ComboBox<>("Customers");
+    private ComboBox<Driver> drivers = new ComboBox<>(getTranslation("view.settings.user.drivers"));
+    private ComboBox<Customer> customers = new ComboBox<>(getTranslation("view.settings.user.customers"));
 
     public UserSettingsView(User user, DriverService driverService, CustomerService customerService) {
 	this.user = user;
@@ -47,8 +47,10 @@ public class UserSettingsView extends Composite<Component> {
 	updateDriversList();
 	drivers.setItemLabelGenerator(Driver::getName);
 	var addButton = new Button(new Icon(VaadinIcon.PLUS), e -> showDriverForm(new Driver()));
+	addButton.setTooltipText(getTranslation("view.settings.user.button.add.driver"));
 	var editButton = new Button(VaadinIcon.PENCIL.create(), e -> showDriverForm(drivers.getValue()));
 	editButton.setEnabled(Objects.nonNull(drivers.getValue()));
+	editButton.setTooltipText(getTranslation("view.settings.user.button.edit.driver"));
 	drivers.addValueChangeListener(e -> editButton.setEnabled(Objects.nonNull(e.getValue())));
 	driversSection.add(drivers, addButton, editButton);
 	driversSection.setAlignItems(Alignment.BASELINE);
@@ -81,8 +83,10 @@ public class UserSettingsView extends Composite<Component> {
 	updateCustomersList();
 	customers.setItemLabelGenerator(Customer::getName);
 	var addButton = new Button(VaadinIcon.PLUS.create(), e -> showCustomerForm(new Customer()));
+	addButton.setTooltipText(getTranslation("view.settings.user.button.add.customer"));
 	var editButton = new Button(VaadinIcon.PENCIL.create(), e -> showCustomerForm(customers.getValue()));
 	editButton.setEnabled(Objects.nonNull(customers.getValue()));
+	editButton.setTooltipText(getTranslation("view.settings.user.button.edit.customer"));
 	customers.addValueChangeListener(e -> editButton.setEnabled(Objects.nonNull(e.getValue())));
 	customersSection.add(customers, addButton, editButton);
 	customersSection.setAlignItems(Alignment.BASELINE);
