@@ -11,9 +11,10 @@ public interface RouteRepository extends JpaRepository<Route, Long> {
 
     @Query("""
     	select r from Route r
-    	where lower(r.departureCity) like lower(concat('%', :filter, '%'))
+    	where (lower(r.departureCity) like lower(concat('%', :filter, '%'))
     	or lower(r.destinationCity) like lower(concat('%', :filter, '%'))
     	or lower(r.cargo.name) like lower(concat('%', :filter, '%'))
+    	or lower(r.billNumber) = lower(:filter))
     	and r.user.id = :userId
     	""")
     List<Route> search(@Param("filter") String filter, @Param("userId") Long userId);

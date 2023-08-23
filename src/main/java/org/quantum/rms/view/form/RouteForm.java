@@ -7,6 +7,8 @@ import java.util.Objects;
 import org.quantum.rms.model.Customer;
 import org.quantum.rms.model.Driver;
 import org.quantum.rms.model.Route;
+import org.quantum.rms.service.RouteService;
+import org.quantum.rms.validator.BillNumberExistsValidator;
 
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
@@ -43,17 +45,35 @@ public class RouteForm extends FormLayout {
     private Button deleteButton = new Button(getTranslation("form.route.button.delete"));
     private Button cancelButton = new Button(getTranslation("form.route.button.cancel"));
 
-    public RouteForm(List<Customer> customers, List<Driver> drivers) {
-	binder.bindInstanceFields(this);
-	customer.setItems(customers);
-	customer.setItemLabelGenerator(Customer::getName);
-	driver.setItems(drivers);
-	driver.setItemLabelGenerator(Driver::getName);
-	binder.forField(cargoName).bind("cargo.name");
-	binder.forField(cargoWeight).bind("cargo.weight");
+    public RouteForm(List<Customer> customers, List<Driver> drivers, RouteService routeService) {
+	configureBinder(routeService);
+	configureCustomer(customers);
+	configureDriver(drivers);
 	configureShipmentDate();
 	add(shipmentDate, departureCity, destinationCity, billNumber, price, paid, cargoName, cargoWeight, customer,
 		driver, createButtonLayout());
+    }
+
+    private void configureCustomer(List<Customer> customers) {
+	customer.setItems(customers);
+	customer.setItemLabelGenerator(Customer::getName);
+    }
+
+    private void configureDriver(List<Driver> drivers) {
+	driver.setItems(drivers);
+	driver.setItemLabelGenerator(Driver::getName);
+    }
+
+    private void configureBinder(RouteService routeService) {
+	binder.bindInstanceFields(this);
+	binder.forField(cargoName).bind("cargo.name");
+	binder.forField(cargoWeight).bind("cargo.weight");
+	binder.forField(billNumber)
+		.withValidator(new BillNumberExistsValidator(getTranslation("form.route.error.bill_number_exists"),
+			routeService, billNumber.getValue()))
+		.bind(Route::getBillNumber, Route::setBillNumber);
+	binder.forField(customer).asRequired(getTranslation("forms.required_field")).bind(Route::getCustomer, Route::setCustomer);
+	binder.forField(driver).asRequired(getTranslation("forms.required_field")).bind(Route::getDriver, Route::setDriver);
     }
 
     private void configureShipmentDate() {

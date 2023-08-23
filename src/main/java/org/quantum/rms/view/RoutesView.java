@@ -80,14 +80,14 @@ public class RoutesView extends VerticalLayout implements HasDynamicTitle {
 	grid.addColumn(Route::getDepartureCity).setHeader(getTranslation("view.routes.column.departure_city"));
 	grid.addColumn(Route::getDestinationCity).setHeader(getTranslation("view.routes.column.destination_city"));
 	grid.addColumn(Route::getShipmentDate).setHeader(getTranslation("view.routes.column.shipment_date"));
-	grid.addColumn(r -> r.getCustomer().getName()).setHeader(getTranslation("view.routes.column.customer"))
-		.setSortable(true);
+	grid.addColumn(r -> r.getCustomer().getName()).setHeader(getTranslation("view.routes.column.customer"));
+	grid.addColumn(Route::getBillNumber).setHeader(getTranslation("view.routes.column.bill_number"));
 	grid.getColumns().forEach(c -> c.setAutoWidth(true));
 	grid.asSingleSelect().addValueChangeListener(e -> editRoute(e.getValue()));
     }
 
     private Component configureForm() {
-	form = new RouteForm(customerService.findAll(), driverService.findAll());
+	form = new RouteForm(customerService.findAll(), driverService.findAll(), routeService);
 	form.setWidth("30em");
 	form.addSaveListener(e -> saveRoute(e.getRoute()));
 	form.addDeleteListener(e -> deleteRoute(e.getRoute()));
