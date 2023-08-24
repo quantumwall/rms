@@ -1,6 +1,7 @@
 package org.quantum.rms.validator;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.quantum.rms.model.Route;
 import org.quantum.rms.service.RouteService;
@@ -14,18 +15,21 @@ public class BillNumberExistsValidator extends AbstractValidator<String> {
     private static final long serialVersionUID = 1L;
     private final RouteService routeService;
     private final String errorMessage;
-    private String oldValue;
+    private String previousValue;
 
-    public BillNumberExistsValidator(String errorMessage, RouteService routeService, String oldValue) {
+    public BillNumberExistsValidator(String errorMessage, RouteService routeService) {
 	super(errorMessage);
 	this.errorMessage = errorMessage;
 	this.routeService = routeService;
-	this.oldValue = oldValue;
+    }
+
+    public void setPreviousValue(String previousValue) {
+	this.previousValue = Objects.nonNull(previousValue) ? previousValue : "";
     }
 
     @Override
     public ValidationResult apply(String value, ValueContext context) {
-	if (oldValue.equals(value)) {
+	if (value.equals(previousValue)) {
 	    return ValidationResult.ok();
 	}
 	List<Route> routes = routeService.findAll(value);

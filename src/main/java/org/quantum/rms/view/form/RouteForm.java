@@ -44,8 +44,11 @@ public class RouteForm extends FormLayout {
     private Button saveButton = new Button(getTranslation("form.route.button.save"));
     private Button deleteButton = new Button(getTranslation("form.route.button.delete"));
     private Button cancelButton = new Button(getTranslation("form.route.button.cancel"));
+    private BillNumberExistsValidator billValidator;
 
     public RouteForm(List<Customer> customers, List<Driver> drivers, RouteService routeService) {
+	billValidator = new BillNumberExistsValidator(getTranslation("form.route.error.bill_number_exists"),
+		routeService);
 	configureBinder(routeService);
 	configureCustomer(customers);
 	configureDriver(drivers);
@@ -68,12 +71,11 @@ public class RouteForm extends FormLayout {
 	binder.bindInstanceFields(this);
 	binder.forField(cargoName).bind("cargo.name");
 	binder.forField(cargoWeight).bind("cargo.weight");
-	binder.forField(billNumber)
-		.withValidator(new BillNumberExistsValidator(getTranslation("form.route.error.bill_number_exists"),
-			routeService, billNumber.getValue()))
-		.bind(Route::getBillNumber, Route::setBillNumber);
-	binder.forField(customer).asRequired(getTranslation("forms.required_field")).bind(Route::getCustomer, Route::setCustomer);
-	binder.forField(driver).asRequired(getTranslation("forms.required_field")).bind(Route::getDriver, Route::setDriver);
+	binder.forField(billNumber).withValidator(billValidator).bind(Route::getBillNumber, Route::setBillNumber);
+	binder.forField(customer).asRequired(getTranslation("forms.required_field")).bind(Route::getCustomer,
+		Route::setCustomer);
+	binder.forField(driver).asRequired(getTranslation("forms.required_field")).bind(Route::getDriver,
+		Route::setDriver);
     }
 
     private void configureShipmentDate() {
@@ -122,7 +124,10 @@ public class RouteForm extends FormLayout {
     }
 
     public void setRoute(Route route) {
-	deleteButton.setEnabled(Objects.nonNull(route) && Objects.nonNull(route.getId()));
+	if (Objects.nonNull(route)) {
+	    billValidator.setPreviousValue(route.getBillNumber());
+	    deleteButton.setEnabled(Objects.nonNull(route.getId()));
+	}
 	binder.setBean(route);
     }
 

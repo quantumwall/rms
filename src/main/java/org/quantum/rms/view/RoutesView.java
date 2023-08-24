@@ -16,6 +16,7 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -55,6 +56,7 @@ public class RoutesView extends VerticalLayout implements HasDynamicTitle {
 	searchField.addValueChangeListener(e -> updateList());
 	searchField.setValueChangeMode(ValueChangeMode.LAZY);
 	searchField.setPlaceholder(getTranslation("view.routes.field.search"));
+	searchField.setPrefixComponent(VaadinIcon.SEARCH.create());
 	searchField.setClearButtonVisible(true);
 	var addRouteButton = new Button(getTranslation("view.routes.button.add"));
 	addRouteButton.addClickListener(e -> addRoute());
