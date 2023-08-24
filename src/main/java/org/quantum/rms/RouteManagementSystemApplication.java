@@ -17,6 +17,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
@@ -27,6 +28,7 @@ public class RouteManagementSystemApplication {
     }
 
     @Bean
+    @Profile("dev")
     ApplicationRunner loadData(UserService userService, CustomerService customerService, DriverService driverService,
 	    RouteService routeService, PasswordEncoder encoder) {
 	return args -> {

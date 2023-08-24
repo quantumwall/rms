@@ -35,3 +35,4 @@ build/
 /nbactions.xml
 /frontend/
 /bin/
+/compose.yml
