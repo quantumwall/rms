@@ -26,6 +26,18 @@ public class RouteManagementSystemApplication {
     public static void main(String[] args) {
 	SpringApplication.run(RouteManagementSystemApplication.class, args);
     }
+    
+    @Bean
+    ApplicationRunner addAdmin(UserService userService, PasswordEncoder encoder) {
+	return args -> {
+	    var admin = new User();
+	    admin.setName("admin");
+	    admin.setEmail("admin");
+	    admin.setPassword(encoder.encode("admin"));
+	    admin.setRole(Role.ADMIN);
+	    userService.save(admin);
+	};
+    }
 
     @Bean
     @Profile("dev")
@@ -34,18 +46,12 @@ public class RouteManagementSystemApplication {
 	return args -> {
 	    var user1 = new User();
 	    var user2 = new User();
-	    var admin = new User();
 	    user1.setName("Петров Петр Петрович");
 	    user1.setEmail("user1@user1.com");
 	    user1.setPassword(encoder.encode("password"));
 	    user2.setName("Иванов Иван Иванович");
 	    user2.setEmail("user2@user2.com");
 	    user2.setPassword(encoder.encode("password"));
-	    admin.setName("admin");
-	    admin.setEmail("admin");
-	    admin.setPassword(encoder.encode("admin"));
-	    admin.setRole(Role.ADMIN);
-	    
 
 	    var driver1 = new Driver();
 	    var driver2 = new Driver();
@@ -137,14 +143,6 @@ public class RouteManagementSystemApplication {
 
 	    userService.save(user1);
 	    userService.save(user2);
-	    userService.save(admin);
-	    
-//	    driverService.save(driver1);
-//	    driverService.save(driver2);
-//	    
-//	    customerService.save(customer1);
-//	    customerService.save(customer2);
-//	    customerService.save(customer3);
 	    
 	    routeService.save(route1);
 	    routeService.save(route2);
