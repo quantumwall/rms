@@ -1,0 +1,22 @@
+services:
+  rms:
+    build: .
+    container_name: rms
+    ports: 
+        - 8080:8080
+    depends_on:
+        - rms-postgres
+    restart: unless-stopped
+
+  rms-postgres:
+    image: postgres:15-alpine
+    container_name: rms-postgres
+    volumes:
+        - /opt/rms/pgdata:/var/lib/postgresql/data
+    environment:
+        - POSTGRES_PASSWORD=CHANGE_ME
+        - POSTGRES_USER=CHANGE_ME
+        - POSTGRES_DB=rms
+    ports:
+        - 5432:5432
+    restart: unless-stopped
