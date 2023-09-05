@@ -11,6 +11,8 @@ services:
       - SPRING_DATASOURCE_USERNAME=
       - SPRING_DATASOURCE_PASSWORD=
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    volumes: 
+      - /opt/rms/log:/log
     restart: unless-stopped
   rms-postgres:
     image: postgres:15-alpine

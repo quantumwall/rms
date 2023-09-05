@@ -1,7 +1,4 @@
 spring:
-  sql:
-    init:
-      platform: postgresql
   datasource:
     url: jdbc:postgresql://localhost:5432/rms
     username: 
@@ -14,3 +11,10 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+logging:
+  file:
+    path: /log/rms.log
+  logback:
+    rollingpolicy:
+      file-name-pattern: /log/rms-%d.gz
+      max-history: 7

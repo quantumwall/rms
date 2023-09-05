@@ -26,16 +26,20 @@ public class RouteManagementSystemApplication {
     public static void main(String[] args) {
 	SpringApplication.run(RouteManagementSystemApplication.class, args);
     }
-    
+
     @Bean
     ApplicationRunner addAdmin(UserService userService, PasswordEncoder encoder) {
 	return args -> {
-	    var admin = new User();
-	    admin.setName("admin");
-	    admin.setEmail("admin");
-	    admin.setPassword(encoder.encode("admin"));
-	    admin.setRole(Role.ADMIN);
-	    userService.save(admin);
+	    userService.findByEmail("admin").ifPresentOrElse(a -> {
+	    }, () -> {
+		var admin = new User();
+		admin.setName("admin");
+		admin.setEmail("admin");
+		admin.setPassword(encoder.encode("admin"));
+		admin.setRole(Role.ADMIN);
+		userService.save(admin);
+	    });
+
 	};
     }
 
@@ -59,10 +63,9 @@ public class RouteManagementSystemApplication {
 	    driver1.setUser(user1);
 	    driver2.setName("Алексеев Алексей Алексеевич");
 	    driver2.setUser(user2);
-	    
+
 	    user1.addDriver(driver1);
 	    user2.addDriver(driver2);
-	    
 
 	    var customer1 = new Customer();
 	    var customer2 = new Customer();
@@ -73,11 +76,10 @@ public class RouteManagementSystemApplication {
 	    customer2.setUser(user1);
 	    customer3.setName("Монополия");
 	    customer3.setUser(user2);
-	    
+
 	    user1.addCustomer(customer1);
 	    user1.addCustomer(customer2);
 	    user2.addCustomer(customer3);
-	    
 
 	    var cargo1 = new Cargo();
 	    var cargo2 = new Cargo();
@@ -143,7 +145,7 @@ public class RouteManagementSystemApplication {
 
 	    userService.save(user1);
 	    userService.save(user2);
-	    
+
 	    routeService.save(route1);
 	    routeService.save(route2);
 	    routeService.save(route3);
