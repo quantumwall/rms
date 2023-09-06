@@ -5,6 +5,7 @@ import org.quantum.rms.model.User;
 
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.textfield.EmailField;
@@ -19,6 +20,7 @@ public class UserForm extends FormLayout {
     private TextField name = new TextField(getTranslation("form.user.field.name"));
     private EmailField email = new EmailField(getTranslation("form.user.field.email"));
     private PasswordField password = new PasswordField(getTranslation("form.user.field.password"));
+    private Checkbox active = new Checkbox(getTranslation("form.user.field.active"));
     private ComboBox<Role> role = new ComboBox<>(getTranslation("form.user.field.role"));
 
     public UserForm(User user, SerializableRunnable saveListener) {
@@ -33,7 +35,7 @@ public class UserForm extends FormLayout {
 	});
 	setResponsiveSteps(new ResponsiveStep("0", 1));
 	setWidth(300, Unit.PIXELS);
-	add(name, email, password, role, addButton);
+	add(name, email, password, active, role, addButton);
     }
     
     private void configureRoles() {
