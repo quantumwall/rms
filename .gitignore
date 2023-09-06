@@ -36,3 +36,4 @@ build/
 /frontend/
 /bin/
 /compose.yml
+*.log

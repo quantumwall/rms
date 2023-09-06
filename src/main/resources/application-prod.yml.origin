@@ -13,8 +13,8 @@ spring:
     show-sql: true
 logging:
   file:
-    path: /log/rms.log
+    name: /log/rms.log
   logback:
     rollingpolicy:
-      file-name-pattern: /log/rms-%d.gz
+      file-name-pattern: ${LOG_FILE}-%d{yyyy-MM-dd}.%i.gz
       max-history: 7
